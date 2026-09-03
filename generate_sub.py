@@ -1,13 +1,13 @@
 import os
 import re
 
-# 获取当前脚本所在的绝对目录，确保生成的 yaml 就在同级目录下
+# 锁定当前脚本运行的真实绝对路径，确保文件读取与生成都在同级目录下
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 BEST_CONF_PATH = os.path.join(CURRENT_DIR, "best-mihomo.yaml")
 REPORT_PATH = os.path.join(CURRENT_DIR, "scan-report.txt")
 OUTPUT_PATH = os.path.join(CURRENT_DIR, "warp.yaml")
 
-# 1. 提取凭据
+# 1. 提取账号私钥、公钥及内网 IP
 with open(BEST_CONF_PATH, "r", encoding="utf-8") as f:
     best_content = f.read()
 
@@ -19,9 +19,11 @@ private_key = get_val("private-key")
 public_key = get_val("public-key")
 ip = get_val("ip")
 ipv6 = get_val("ipv6")
-sni = get_val("sni")
 
-# 2. 提取可用端点
+# 【核心微调】强制指定顶级抗封锁伪装 SNI
+sni = "www.visa.cn"
+
+# 2. 从扫描日志中提取可用节点
 endpoints = []
 in_table = False
 
@@ -35,23 +37,27 @@ with open(REPORT_PATH, "r", encoding="utf-8") as f:
         if not in_table:
             continue
         
-        m = re.match(r'^\s*([\d\.]+:\d+)\s+', line)
+        # 匹配合法的 IPv4:端口 结构
+        m = re.match(r'^\s*((?:\d{1,3}\.){3}\d{1,3}:\d{1,5})\s+', line)
         if m:
             ep = m.group(1)
             if ep not in endpoints:
                 endpoints.append(ep)
 
-# 限制前 50 个优质节点
+# 优选前 50 个高可用端点
 endpoints = endpoints[:50]
 
-# 3. 构造 Mihomo (Clash Meta) 完整增强配置
+if not endpoints:
+    raise RuntimeError("未在 scan-report.txt 中找到可用端点！")
+
+# 3. 组装支持国内分流与自动优选的 Mihomo 配置
 yaml_lines = [
     "mixed-port: 7890",
     "allow-lan: false",
     "mode: rule",
     "log-level: info",
     "",
-    "# DNS 模块配置，防止 DNS 污染并保证国内域名直连解析",
+    "# DNS 防污染与国内直连解析",
     "dns:",
     "  enable: true",
     "  ipv6: false",
@@ -62,7 +68,6 @@ yaml_lines = [
     "    - 119.29.29.29",
     "  fallback:",
     "    - 1.1.1.1",
-    "    - 8.8.8.8",
     "",
     "proxies:"
 ]
@@ -92,17 +97,17 @@ for idx, ep in enumerate(endpoints, 1):
         ""
     ])
 
-# 4. 增强策略组：主选择器 + 自动选优
+# 4. 策略组结构（主选择器 + 自动选优）
 yaml_lines.extend([
     "proxy-groups:",
-    "  # 主策略组：默认开启自动选优，也可以展开手动指定具体节点",
+    "  # 主选择器：默认走自动选优，可在 Clash 客户端内随时展开单选指定节点",
     "  - name: 🚀 节点选择",
     "    type: select",
     "    proxies:",
     "      - ⚡ 自动优选",
 ] + [f"      - '{name}'" for name in node_names] + [
     "",
-    "  # 自动优选策略组：后台测速并无感切换到最低延迟",
+    "  # 自动选优组：后台定时向 Cloudflare trace 测速，自动切至最低延迟端点",
     "  - name: ⚡ 自动优选",
     "    type: url-test",
     "    url: https://www.cloudflare.com/cdn-cgi/trace",
@@ -113,30 +118,30 @@ yaml_lines.extend([
     ""
 ])
 
-# 5. 国内分流规则（国内域名、IP直连；其余走代理）
+# 5. 国内精准分流规则
 yaml_lines.extend([
     "rules:",
-    "  # 局域网与本机流量直接放行",
+    "  # 局域网直连",
     "  - GEOIP,lan,DIRECT,no-resolve",
     "",
-    "  # 常见国内 DNS / NTP 等服务直连",
+    "  # 基础 NTP/DNS 端口直连",
     "  - DST-PORT,123,DIRECT",
     "  - DST-PORT,53,DIRECT",
     "",
-    "  # 国内常用域名及主流平台直连 (利用 Mihomo 内置规则集合)",
+    "  # 国内常见网站、应用与服务直连",
     "  - GEOSITE,cn,DIRECT",
     "  - GEOSITE,category-games@cn,DIRECT",
     "",
     "  # 国内 IP 段直连",
     "  - GEOIP,CN,DIRECT",
     "",
-    "  # 其余全部走 WARP 节点选择器",
+    "  # 其余走 WARP",
     "  - MATCH,🚀 节点选择"
 ])
 
-# 写入当前目录
+# 保存输出到同一目录下的 warp.yaml
 with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
     f.write("\n".join(yaml_lines))
 
-print(f"[OK] 成功生成文件: {OUTPUT_PATH}")
-print(f"[OK] 共包含 {len(endpoints)} 个节点并已配置国内直连分流！")
+print(f"[OK] 成功生成配置: {OUTPUT_PATH}")
+print(f"[OK] 已写入 {len(endpoints)} 个节点，强制伪装 SNI: {sni}")
