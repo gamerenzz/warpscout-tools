@@ -2,11 +2,11 @@ name: Auto Generate WARP Config
 
 on:
   schedule:
-    # 每天 UTC 时间 0点和12点运行一次 (对应北京时间 08:00 和 20:00)
+    # 每天 UTC 时间 00:00 与 12:00 自动运行 (北京时间 08:00 与 20:00)
     - cron: '0 0,12 * * *'
-  workflow_dispatch: # 允许在 GitHub 网页上随时手动点击运行
+  workflow_dispatch: # 随时可在 GitHub 网页上点击 Run workflow 手动运行
 
-# 关键：赋予工作流向仓库推代码（写权限）
+# 关键：授予工作流向 GitHub 仓库直接推代码的写权限
 permissions:
   contents: write
 
@@ -18,44 +18,44 @@ jobs:
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
-      - name: 设置 Python 环境
+      - name: 设置 Python 运行环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: 安装 warpscout
+      - name: 下载并安装 warpscout
         run: |
           curl -fsSL https://raw.githubusercontent.com/vernette/warpscout/master/install.sh | sh
           warpscout version
 
-      - name: 注册 WARP 凭据
+      - name: 注册 Cloudflare WARP 凭据
         run: |
           warpscout register
 
-      - name: 扫描 MASQUE-H2 端点
+      - name: 扫描 MASQUE-H2 端点 (使用 visa 伪装 SNI)
         run: |
-          # 扫描端点，结果在当前工作目录
-          warpscout scan -p masque-h2 -n 20 \
+          # 显式加入 -masque-sni www.visa.cn 确保探测通畅
+          warpscout scan -p masque-h2 -masque-sni www.visa.cn -n 20 \
             -o scan-report.txt \
             -conf best-mihomo.yaml \
             -conf-type mihomo
 
-      - name: 生成订阅配置文件 (同级目录)
+      - name: 生成订阅配置文件 (保存在脚本同级目录)
         run: |
           python generate_sub.py
 
-      - name: 提交并推送到仓库
+      - name: 提交并推送到当前仓库
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 只把生成的 warp.yaml 添加并提交，避免将账号隐私缓存/报告推上去
+          # 只把同级目录下生成的 warp.yaml 添加到 Git
           git add warp.yaml
           
-          # 检查是否有内容变更，有变更才 commit，避免报错
+          # 判断是否有更新，避免重复提交空 commit
           if git diff --staged --quiet; then
-            echo "配置无变化，无需提交。"
+            echo "配置无变动，无需推送。"
           else
-            git commit -m "Auto update warp.yaml [skip ci]"
+            git commit -m "Auto update warp.yaml with visa.cn SNI [skip ci]"
             git push
           fi
