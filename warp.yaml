@@ -13,579 +13,540 @@ dns:
     - 119.29.29.29
   fallback:
     - 1.1.1.1
-    - 8.8.8.8
 
 proxies:
-  - name: 'WARP-H2-01-443'
+  - name: 'OUTER-01-443'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 443
     network: h2
     sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-02-8443'
+  - name: '🔗WARP-Chain-01'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-01-443'
+
+  - name: 'OUTER-02-8443'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 8443
     network: h2
     sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-03-1701'
+  - name: '🔗WARP-Chain-02'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-02-8443'
+
+  - name: 'OUTER-03-1701'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 1701
     network: h2
     sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-04-4443'
+  - name: '🔗WARP-Chain-03'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-03-1701'
+
+  - name: 'OUTER-04-4443'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 4443
     network: h2
     sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-05-8095'
+  - name: '🔗WARP-Chain-04'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-04-4443'
+
+  - name: 'OUTER-05-8095'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 8095
     network: h2
     sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-06-500'
+  - name: '🔗WARP-Chain-05'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-05-8095'
+
+  - name: 'OUTER-06-500'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 500
     network: h2
     sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-07-4500'
+  - name: '🔗WARP-Chain-06'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-06-500'
+
+  - name: 'OUTER-07-4500'
     type: masque
-    server: '162.159.198.102'
+    server: '162.159.198.104'
     port: 4500
     network: h2
     sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-08-443'
+  - name: '🔗WARP-Chain-07'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-07-4500'
+
+  - name: 'OUTER-08-443'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 443
     network: h2
     sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-09-8443'
+  - name: '🔗WARP-Chain-08'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-08-443'
+
+  - name: 'OUTER-09-8443'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 8443
     network: h2
     sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-10-1701'
+  - name: '🔗WARP-Chain-09'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-09-8443'
+
+  - name: 'OUTER-10-1701'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 1701
     network: h2
     sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-11-4443'
+  - name: '🔗WARP-Chain-10'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-10-1701'
+
+  - name: 'OUTER-11-4443'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 4443
     network: h2
     sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-12-8095'
+  - name: '🔗WARP-Chain-11'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-11-4443'
+
+  - name: 'OUTER-12-8095'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 8095
     network: h2
     sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-13-500'
+  - name: '🔗WARP-Chain-12'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-12-8095'
+
+  - name: 'OUTER-13-500'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 500
     network: h2
     sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-14-4500'
+  - name: '🔗WARP-Chain-13'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-13-500'
+
+  - name: 'OUTER-14-4500'
     type: masque
-    server: '162.159.198.129'
+    server: '162.159.198.109'
     port: 4500
     network: h2
     sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-15-443'
+  - name: '🔗WARP-Chain-14'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-14-4500'
+
+  - name: 'OUTER-15-443'
     type: masque
-    server: '162.159.198.134'
+    server: '162.159.198.111'
     port: 443
     network: h2
     sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-16-8443'
+  - name: '🔗WARP-Chain-15'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-15-443'
+
+  - name: 'OUTER-16-8443'
     type: masque
-    server: '162.159.198.134'
+    server: '162.159.198.111'
     port: 8443
     network: h2
     sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-17-1701'
+  - name: '🔗WARP-Chain-16'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-16-8443'
+
+  - name: 'OUTER-17-1701'
     type: masque
-    server: '162.159.198.134'
+    server: '162.159.198.111'
     port: 1701
     network: h2
     sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-18-4443'
+  - name: '🔗WARP-Chain-17'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-17-1701'
+
+  - name: 'OUTER-18-4443'
     type: masque
-    server: '162.159.198.134'
+    server: '162.159.198.111'
     port: 4443
     network: h2
     sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-19-8095'
+  - name: '🔗WARP-Chain-18'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-18-4443'
+
+  - name: 'OUTER-19-8095'
     type: masque
-    server: '162.159.198.134'
+    server: '162.159.198.111'
     port: 8095
     network: h2
     sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-20-500'
+  - name: '🔗WARP-Chain-19'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-19-8095'
+
+  - name: 'OUTER-20-500'
     type: masque
-    server: '162.159.198.134'
+    server: '162.159.198.111'
     port: 500
     network: h2
     sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
 
-  - name: 'WARP-H2-21-4500'
-    type: masque
-    server: '162.159.198.134'
-    port: 4500
-    network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
+  - name: '🔗WARP-Chain-20'
+    type: wireguard
+    server: '162.159.192.1'
+    port: 2408
+    ip: '172.16.0.3'
+    public-key: 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo='
+    private-key: 'MHcCAQEEIBIBC7nBY8sutdpweOs9GPbFuWxcvfbZOEiBkU8b2i76oAoGCCqGSM49AwEHoUQDQgAEUBk3jcOR9jnc6gaqfwf0k8MNMg9kfiA7khfq6yB0bCF1QwWyTrKYERpl0/9CP0WXZvVDg4zcQtFU0NlSxNZHjg=='
     udp: true
     remote-dns-resolve: true
     dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-22-443'
-    type: masque
-    server: '162.159.198.161'
-    port: 443
-    network: h2
-    sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-23-8443'
-    type: masque
-    server: '162.159.198.161'
-    port: 8443
-    network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-24-1701'
-    type: masque
-    server: '162.159.198.161'
-    port: 1701
-    network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-25-4443'
-    type: masque
-    server: '162.159.198.161'
-    port: 4443
-    network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-26-8095'
-    type: masque
-    server: '162.159.198.161'
-    port: 8095
-    network: h2
-    sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-27-500'
-    type: masque
-    server: '162.159.198.161'
-    port: 500
-    network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-28-4500'
-    type: masque
-    server: '162.159.198.161'
-    port: 4500
-    network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-29-443'
-    type: masque
-    server: '162.159.198.167'
-    port: 443
-    network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-30-8443'
-    type: masque
-    server: '162.159.198.167'
-    port: 8443
-    network: h2
-    sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-31-1701'
-    type: masque
-    server: '162.159.198.167'
-    port: 1701
-    network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-32-4443'
-    type: masque
-    server: '162.159.198.167'
-    port: 4443
-    network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-33-8095'
-    type: masque
-    server: '162.159.198.167'
-    port: 8095
-    network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-34-500'
-    type: masque
-    server: '162.159.198.167'
-    port: 500
-    network: h2
-    sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-35-4500'
-    type: masque
-    server: '162.159.198.167'
-    port: 4500
-    network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-36-443'
-    type: masque
-    server: '162.159.198.193'
-    port: 443
-    network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-37-8443'
-    type: masque
-    server: '162.159.198.193'
-    port: 8443
-    network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-38-1701'
-    type: masque
-    server: '162.159.198.193'
-    port: 1701
-    network: h2
-    sni: 'www.mastercard.com.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-39-4443'
-    type: masque
-    server: '162.159.198.193'
-    port: 4443
-    network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
-
-  - name: 'WARP-H2-40-8095'
-    type: masque
-    server: '162.159.198.193'
-    port: 8095
-    network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAsrUmxfLJtZkZBgUGxdFY1ur8PZJQe2/J0nP6xaKW6roAoGCCqGSM49AwEHoUQDQgAE7L56tCzVvYgbkqhOXzFTaGh+dy8V8uDqAYGAl6fUUhqKIXfvGnsf2qNVhySujLzOgHUdhF0s5HCsOtsh1ZsS9g=='
-    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
-    ip: '172.16.0.2'
-    udp: true
-    remote-dns-resolve: true
-    dns: [1.1.1.1, 1.0.0.1]
+    dialer-proxy: 'OUTER-20-500'
 
 proxy-groups:
   - name: 🚀 默认代理
     type: select
     proxies:
       - ⚡ 自动优选
+      - 🛡️ 故障转移
       - DIRECT
-      - 'WARP-H2-01-443'
-      - 'WARP-H2-02-8443'
-      - 'WARP-H2-03-1701'
-      - 'WARP-H2-04-4443'
-      - 'WARP-H2-05-8095'
-      - 'WARP-H2-06-500'
-      - 'WARP-H2-07-4500'
-      - 'WARP-H2-08-443'
-      - 'WARP-H2-09-8443'
-      - 'WARP-H2-10-1701'
-      - 'WARP-H2-11-4443'
-      - 'WARP-H2-12-8095'
-      - 'WARP-H2-13-500'
-      - 'WARP-H2-14-4500'
-      - 'WARP-H2-15-443'
-      - 'WARP-H2-16-8443'
-      - 'WARP-H2-17-1701'
-      - 'WARP-H2-18-4443'
-      - 'WARP-H2-19-8095'
-      - 'WARP-H2-20-500'
-      - 'WARP-H2-21-4500'
-      - 'WARP-H2-22-443'
-      - 'WARP-H2-23-8443'
-      - 'WARP-H2-24-1701'
-      - 'WARP-H2-25-4443'
-      - 'WARP-H2-26-8095'
-      - 'WARP-H2-27-500'
-      - 'WARP-H2-28-4500'
-      - 'WARP-H2-29-443'
-      - 'WARP-H2-30-8443'
-      - 'WARP-H2-31-1701'
-      - 'WARP-H2-32-4443'
-      - 'WARP-H2-33-8095'
-      - 'WARP-H2-34-500'
-      - 'WARP-H2-35-4500'
-      - 'WARP-H2-36-443'
-      - 'WARP-H2-37-8443'
-      - 'WARP-H2-38-1701'
-      - 'WARP-H2-39-4443'
-      - 'WARP-H2-40-8095'
+      - '🔗WARP-Chain-01'
+      - '🔗WARP-Chain-02'
+      - '🔗WARP-Chain-03'
+      - '🔗WARP-Chain-04'
+      - '🔗WARP-Chain-05'
+      - '🔗WARP-Chain-06'
+      - '🔗WARP-Chain-07'
+      - '🔗WARP-Chain-08'
+      - '🔗WARP-Chain-09'
+      - '🔗WARP-Chain-10'
+      - '🔗WARP-Chain-11'
+      - '🔗WARP-Chain-12'
+      - '🔗WARP-Chain-13'
+      - '🔗WARP-Chain-14'
+      - '🔗WARP-Chain-15'
+      - '🔗WARP-Chain-16'
+      - '🔗WARP-Chain-17'
+      - '🔗WARP-Chain-18'
+      - '🔗WARP-Chain-19'
+      - '🔗WARP-Chain-20'
 
   - name: 🤖 人工智能
     type: select
     proxies:
+      - 🛡️ 故障转移
       - ⚡ 自动优选
       - 🚀 默认代理
 
@@ -606,82 +567,90 @@ proxy-groups:
     url: https://www.cloudflare.com/cdn-cgi/trace
     interval: 300
     tolerance: 50
+    lazy: true
     proxies:
-      - 'WARP-H2-01-443'
-      - 'WARP-H2-02-8443'
-      - 'WARP-H2-03-1701'
-      - 'WARP-H2-04-4443'
-      - 'WARP-H2-05-8095'
-      - 'WARP-H2-06-500'
-      - 'WARP-H2-07-4500'
-      - 'WARP-H2-08-443'
-      - 'WARP-H2-09-8443'
-      - 'WARP-H2-10-1701'
-      - 'WARP-H2-11-4443'
-      - 'WARP-H2-12-8095'
-      - 'WARP-H2-13-500'
-      - 'WARP-H2-14-4500'
-      - 'WARP-H2-15-443'
-      - 'WARP-H2-16-8443'
-      - 'WARP-H2-17-1701'
-      - 'WARP-H2-18-4443'
-      - 'WARP-H2-19-8095'
-      - 'WARP-H2-20-500'
-      - 'WARP-H2-21-4500'
-      - 'WARP-H2-22-443'
-      - 'WARP-H2-23-8443'
-      - 'WARP-H2-24-1701'
-      - 'WARP-H2-25-4443'
-      - 'WARP-H2-26-8095'
-      - 'WARP-H2-27-500'
-      - 'WARP-H2-28-4500'
-      - 'WARP-H2-29-443'
-      - 'WARP-H2-30-8443'
-      - 'WARP-H2-31-1701'
-      - 'WARP-H2-32-4443'
-      - 'WARP-H2-33-8095'
-      - 'WARP-H2-34-500'
-      - 'WARP-H2-35-4500'
-      - 'WARP-H2-36-443'
-      - 'WARP-H2-37-8443'
-      - 'WARP-H2-38-1701'
-      - 'WARP-H2-39-4443'
-      - 'WARP-H2-40-8095'
+      - '🔗WARP-Chain-01'
+      - '🔗WARP-Chain-02'
+      - '🔗WARP-Chain-03'
+      - '🔗WARP-Chain-04'
+      - '🔗WARP-Chain-05'
+      - '🔗WARP-Chain-06'
+      - '🔗WARP-Chain-07'
+      - '🔗WARP-Chain-08'
+      - '🔗WARP-Chain-09'
+      - '🔗WARP-Chain-10'
+      - '🔗WARP-Chain-11'
+      - '🔗WARP-Chain-12'
+      - '🔗WARP-Chain-13'
+      - '🔗WARP-Chain-14'
+      - '🔗WARP-Chain-15'
+      - '🔗WARP-Chain-16'
+      - '🔗WARP-Chain-17'
+      - '🔗WARP-Chain-18'
+      - '🔗WARP-Chain-19'
+      - '🔗WARP-Chain-20'
+
+  - name: 🛡️ 故障转移
+    type: fallback
+    url: https://www.cloudflare.com/cdn-cgi/trace
+    interval: 300
+    lazy: true
+    proxies:
+      - '🔗WARP-Chain-01'
+      - '🔗WARP-Chain-02'
+      - '🔗WARP-Chain-03'
+      - '🔗WARP-Chain-04'
+      - '🔗WARP-Chain-05'
+      - '🔗WARP-Chain-06'
+      - '🔗WARP-Chain-07'
+      - '🔗WARP-Chain-08'
+      - '🔗WARP-Chain-09'
+      - '🔗WARP-Chain-10'
+      - '🔗WARP-Chain-11'
+      - '🔗WARP-Chain-12'
+      - '🔗WARP-Chain-13'
+      - '🔗WARP-Chain-14'
+      - '🔗WARP-Chain-15'
+      - '🔗WARP-Chain-16'
+      - '🔗WARP-Chain-17'
+      - '🔗WARP-Chain-18'
+      - '🔗WARP-Chain-19'
+      - '🔗WARP-Chain-20'
 
 rules:
-  # 1. 私有网段 & 本地局域网直连
   - GEOIP,private,DIRECT,no-resolve
   - GEOIP,lan,DIRECT,no-resolve
 
-  # 2. 严防 BT / P2P 下载走 WARP（防止封号及异常限速）
+  # P2P/BT 强制直连
   - PROCESS-NAME,qbittorrent.exe,DIRECT
   - PROCESS-NAME,Transmission.exe,DIRECT
   - PROCESS-NAME,Thunder.exe,DIRECT
   - PROCESS-NAME,BitComet.exe,DIRECT
   - DST-PORT,6881-6889,DIRECT
 
-  # 3. 常见基础服务与 NTP 端口放行
   - DST-PORT,123,DIRECT
   - DST-PORT,53,DIRECT
 
-  # 4. 全局广告拦截
+  # 广告拦截
   - GEOSITE,category-ads-all,🛑 广告拦截
 
-  # 5. AI 服务走专属分流组
+  # AI 服务专属规则 (包括 Google Gemini 域名)
   - GEOSITE,openai,🤖 人工智能
   - GEOSITE,anthropic,🤖 人工智能
   - DOMAIN-SUFFIX,oaistatic.com,🤖 人工智能
   - DOMAIN-SUFFIX,oaiusercontent.com,🤖 人工智能
+  - DOMAIN-KEYWORD,gemini,🤖 人工智能
+  - DOMAIN-SUFFIX,bard.google.com,🤖 人工智能
+  - DOMAIN-SUFFIX,generativeai.google,🤖 人工智能
 
-  # 6. 常见境外主流多媒体
+  # 境外多媒体
   - GEOSITE,youtube,📺 国际媒体
   - GEOSITE,netflix,📺 国际媒体
   - GEOSITE,spotify,📺 国际媒体
 
-  # 7. 大陆全域直连白名单
+  # 大陆直连白名单
   - GEOSITE,cn,DIRECT
   - GEOSITE,category-games@cn,DIRECT
   - GEOIP,CN,DIRECT
 
-  # 8. 兜底规则走默认代理组
   - MATCH,🚀 默认代理
