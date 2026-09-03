@@ -1,0 +1,801 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+
+# DNS 模块配置，防止 DNS 污染并保证国内域名直连解析
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  fallback:
+    - 1.1.1.1
+    - 8.8.8.8
+
+proxies:
+  - name: 'WARP-H2-01'
+    type: masque
+    server: '162.159.198.105'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-02'
+    type: masque
+    server: '162.159.198.105'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-03'
+    type: masque
+    server: '162.159.198.105'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-04'
+    type: masque
+    server: '162.159.198.105'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-05'
+    type: masque
+    server: '162.159.198.105'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-06'
+    type: masque
+    server: '162.159.198.105'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-07'
+    type: masque
+    server: '162.159.198.105'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-08'
+    type: masque
+    server: '162.159.198.118'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-09'
+    type: masque
+    server: '162.159.198.118'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-10'
+    type: masque
+    server: '162.159.198.118'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-11'
+    type: masque
+    server: '162.159.198.118'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-12'
+    type: masque
+    server: '162.159.198.118'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-13'
+    type: masque
+    server: '162.159.198.118'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-14'
+    type: masque
+    server: '162.159.198.118'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-15'
+    type: masque
+    server: '162.159.198.120'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-16'
+    type: masque
+    server: '162.159.198.120'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-17'
+    type: masque
+    server: '162.159.198.120'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-18'
+    type: masque
+    server: '162.159.198.120'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-19'
+    type: masque
+    server: '162.159.198.120'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-20'
+    type: masque
+    server: '162.159.198.120'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-21'
+    type: masque
+    server: '162.159.198.120'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-22'
+    type: masque
+    server: '162.159.198.137'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-23'
+    type: masque
+    server: '162.159.198.137'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-24'
+    type: masque
+    server: '162.159.198.137'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-25'
+    type: masque
+    server: '162.159.198.137'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-26'
+    type: masque
+    server: '162.159.198.137'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-27'
+    type: masque
+    server: '162.159.198.137'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-28'
+    type: masque
+    server: '162.159.198.137'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-29'
+    type: masque
+    server: '162.159.198.142'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-30'
+    type: masque
+    server: '162.159.198.142'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-31'
+    type: masque
+    server: '162.159.198.142'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-32'
+    type: masque
+    server: '162.159.198.142'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-33'
+    type: masque
+    server: '162.159.198.142'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-34'
+    type: masque
+    server: '162.159.198.142'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-35'
+    type: masque
+    server: '162.159.198.142'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-36'
+    type: masque
+    server: '162.159.198.179'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-37'
+    type: masque
+    server: '162.159.198.179'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-38'
+    type: masque
+    server: '162.159.198.179'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-39'
+    type: masque
+    server: '162.159.198.179'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-40'
+    type: masque
+    server: '162.159.198.179'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-41'
+    type: masque
+    server: '162.159.198.179'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-42'
+    type: masque
+    server: '162.159.198.179'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-43'
+    type: masque
+    server: '162.159.198.192'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-44'
+    type: masque
+    server: '162.159.198.192'
+    port: 443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-45'
+    type: masque
+    server: '162.159.198.192'
+    port: 4443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-46'
+    type: masque
+    server: '162.159.198.192'
+    port: 4500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-47'
+    type: masque
+    server: '162.159.198.192'
+    port: 500
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-48'
+    type: masque
+    server: '162.159.198.192'
+    port: 8095
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-49'
+    type: masque
+    server: '162.159.198.192'
+    port: 8443
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+  - name: 'WARP-H2-50'
+    type: masque
+    server: '162.159.198.194'
+    port: 1701
+    network: h2
+    sni: 'consumer-masque.cloudflareclient.com'
+    private-key: 'MHcCAQEEIPEJKWC3YiBIlwsnqEHaj64fYrS+pneFkuI8JaWgn4eEoAoGCCqGSM49AwEHoUQDQgAEI3Tl9VnQbMliCkgcWgfZ9BtJqxzPUdwEe+4j14ZOXOLF8TlHil1doJZKnGrvxwkHxb6M2//kEQANPyVt6SuP6Q=='
+    public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
+    ip: '172.16.0.2'
+    udp: true
+    remote-dns-resolve: true
+    dns: [1.1.1.1, 1.0.0.1]
+
+proxy-groups:
+  # 主策略组：默认开启自动选优，也可以展开手动指定具体节点
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - ⚡ 自动优选
+      - 'WARP-H2-01'
+      - 'WARP-H2-02'
+      - 'WARP-H2-03'
+      - 'WARP-H2-04'
+      - 'WARP-H2-05'
+      - 'WARP-H2-06'
+      - 'WARP-H2-07'
+      - 'WARP-H2-08'
+      - 'WARP-H2-09'
+      - 'WARP-H2-10'
+      - 'WARP-H2-11'
+      - 'WARP-H2-12'
+      - 'WARP-H2-13'
+      - 'WARP-H2-14'
+      - 'WARP-H2-15'
+      - 'WARP-H2-16'
+      - 'WARP-H2-17'
+      - 'WARP-H2-18'
+      - 'WARP-H2-19'
+      - 'WARP-H2-20'
+      - 'WARP-H2-21'
+      - 'WARP-H2-22'
+      - 'WARP-H2-23'
+      - 'WARP-H2-24'
+      - 'WARP-H2-25'
+      - 'WARP-H2-26'
+      - 'WARP-H2-27'
+      - 'WARP-H2-28'
+      - 'WARP-H2-29'
+      - 'WARP-H2-30'
+      - 'WARP-H2-31'
+      - 'WARP-H2-32'
+      - 'WARP-H2-33'
+      - 'WARP-H2-34'
+      - 'WARP-H2-35'
+      - 'WARP-H2-36'
+      - 'WARP-H2-37'
+      - 'WARP-H2-38'
+      - 'WARP-H2-39'
+      - 'WARP-H2-40'
+      - 'WARP-H2-41'
+      - 'WARP-H2-42'
+      - 'WARP-H2-43'
+      - 'WARP-H2-44'
+      - 'WARP-H2-45'
+      - 'WARP-H2-46'
+      - 'WARP-H2-47'
+      - 'WARP-H2-48'
+      - 'WARP-H2-49'
+      - 'WARP-H2-50'
+
+  # 自动优选策略组：后台测速并无感切换到最低延迟
+  - name: ⚡ 自动优选
+    type: url-test
+    url: https://www.cloudflare.com/cdn-cgi/trace
+    interval: 300
+    tolerance: 50
+    proxies:
+      - 'WARP-H2-01'
+      - 'WARP-H2-02'
+      - 'WARP-H2-03'
+      - 'WARP-H2-04'
+      - 'WARP-H2-05'
+      - 'WARP-H2-06'
+      - 'WARP-H2-07'
+      - 'WARP-H2-08'
+      - 'WARP-H2-09'
+      - 'WARP-H2-10'
+      - 'WARP-H2-11'
+      - 'WARP-H2-12'
+      - 'WARP-H2-13'
+      - 'WARP-H2-14'
+      - 'WARP-H2-15'
+      - 'WARP-H2-16'
+      - 'WARP-H2-17'
+      - 'WARP-H2-18'
+      - 'WARP-H2-19'
+      - 'WARP-H2-20'
+      - 'WARP-H2-21'
+      - 'WARP-H2-22'
+      - 'WARP-H2-23'
+      - 'WARP-H2-24'
+      - 'WARP-H2-25'
+      - 'WARP-H2-26'
+      - 'WARP-H2-27'
+      - 'WARP-H2-28'
+      - 'WARP-H2-29'
+      - 'WARP-H2-30'
+      - 'WARP-H2-31'
+      - 'WARP-H2-32'
+      - 'WARP-H2-33'
+      - 'WARP-H2-34'
+      - 'WARP-H2-35'
+      - 'WARP-H2-36'
+      - 'WARP-H2-37'
+      - 'WARP-H2-38'
+      - 'WARP-H2-39'
+      - 'WARP-H2-40'
+      - 'WARP-H2-41'
+      - 'WARP-H2-42'
+      - 'WARP-H2-43'
+      - 'WARP-H2-44'
+      - 'WARP-H2-45'
+      - 'WARP-H2-46'
+      - 'WARP-H2-47'
+      - 'WARP-H2-48'
+      - 'WARP-H2-49'
+      - 'WARP-H2-50'
+
+rules:
+  # 局域网与本机流量直接放行
+  - GEOIP,lan,DIRECT,no-resolve
+
+  # 常见国内 DNS / NTP 等服务直连
+  - DST-PORT,123,DIRECT
+  - DST-PORT,53,DIRECT
+
+  # 国内常用域名及主流平台直连 (利用 Mihomo 内置规则集合)
+  - GEOSITE,cn,DIRECT
+  - GEOSITE,category-games@cn,DIRECT
+
+  # 国内 IP 段直连
+  - GEOIP,CN,DIRECT
+
+  # 其余全部走 WARP 节点选择器
+  - MATCH,🚀 节点选择
