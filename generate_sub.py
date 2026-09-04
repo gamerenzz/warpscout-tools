@@ -1,22 +1,20 @@
 import os
 import re
-from collections import defaultdict
 
-# 锁定脚本执行目录，确保同级操作
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 BEST_CONF_PATH = os.path.join(CURRENT_DIR, "best-mihomo.yaml")
 REPORT_PATH = os.path.join(CURRENT_DIR, "scan-report.txt")
+TXT_PATH = os.path.join(CURRENT_DIR, "endpoints.txt")
 OUTPUT_PATH = os.path.join(CURRENT_DIR, "warp.yaml")
 
-# 1. 验证有效的顶级白名单 SNI 伪装池
 SNI_POOL = [
-    "www.visa.cn",
     "www.apple.com",
+    "www.visa.cn",
     "www.tesla.cn",
     "www.mastercard.com.cn"
 ]
 
-# 2. 读取凭据
+# 1. 提取凭据
 with open(BEST_CONF_PATH, "r", encoding="utf-8") as f:
     best_content = f.read()
 
@@ -29,53 +27,51 @@ public_key = get_val("public-key")
 ip = get_val("ip")
 ipv6 = get_val("ipv6")
 
-# 3. 严格从真实扫描报告中提取真实存活的 MASQUE 端点并按端口分类
-port_buckets = defaultdict(list)
-in_table = False
+# 2. 端点获取策略：优先读取本地优选的 endpoints.txt
+target_endpoints = []
 
-with open(REPORT_PATH, "r", encoding="utf-8") as f:
-    for line in f:
-        if line.startswith("ENDPOINT"):
-            in_table = True
-            continue
-        if "#" in line and "torn down" in line:
-            break
-        if not in_table:
-            continue
-        
-        # 只提取合法并且存活的端点
-        m = re.match(r'^\s*((?:\d{1,3}\.){3}\d{1,3}):(\d{1,5})\s+', line)
-        if m:
-            host = m.group(1)
-            port = m.group(2)
-            ep = f"{host}:{port}"
-            if ep not in port_buckets[port]:
-                port_buckets[port].append(ep)
+if os.path.exists(TXT_PATH):
+    print(f"[INFO] 发现本地优选端点文件: {TXT_PATH}，优先载入...")
+    with open(TXT_PATH, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            # 过滤注释和空行，严格匹配 IP:Port
+            if line and not line.startswith("#"):
+                m = re.match(r'^((?:\d{1,3}\.){3}\d{1,3}:\d{1,5})', line)
+                if m and m.group(1) not in target_endpoints:
+                    target_endpoints.append(m.group(1))
 
-# 4. 端口离散化均衡交错抽取（保障各端口、各不同 IP 充分混合）
-balanced_endpoints = []
-preferred_ports = ["443", "8443", "1701", "4443", "8095", "500", "4500"]
-
-# 补全其他可能存在的端口
-for p in list(port_buckets.keys()):
-    if p not in preferred_ports:
-        preferred_ports.append(p)
-
-while len(balanced_endpoints) < 40:
-    added_in_round = False
-    for p in preferred_ports:
-        if port_buckets[p]:
-            balanced_endpoints.append(port_buckets[p].pop(0))
-            added_in_round = True
-            if len(balanced_endpoints) >= 40:
+# 如果没有 endpoints.txt 或为空，才从扫描报告中抓取
+if not target_endpoints and os.path.exists(REPORT_PATH):
+    print("[INFO] 未找到有效 txt 端点，回退至从 scan-report.txt 动态提取...")
+    working = []
+    seen = set()
+    in_table = False
+    with open(REPORT_PATH, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("ENDPOINT"):
+                in_table = True
+                continue
+            if "#" in line and "torn down" in line:
                 break
-    if not added_in_round:
-        break
+            if not in_table:
+                continue
+            m = re.match(r'^\s*((?:\d{1,3}\.){3}\d{1,3}:\d{1,5})\s+(\d+(?:\.\d+)?ms|\?)\s+', line)
+            if m:
+                ep, ping_str = m.group(1), m.group(2)
+                if ep not in seen:
+                    seen.add(ep)
+                    ping_val = float(ping_str.replace("ms", "")) if ping_str != "?" else 999999.0
+                    working.append({"endpoint": ep, "ping": ping_val})
+    working.sort(key=lambda x: x["ping"])
+    target_endpoints = [x["endpoint"] for x in working[:30]]
 
-if not balanced_endpoints:
-    raise RuntimeError("未能从扫描报告中提取到任何真实的有效 MASQUE 节点！")
+if not target_endpoints:
+    raise RuntimeError("未能提取到任何有效节点，请检查配置文件！")
 
-# 5. 构建完整配置（含内核加速与防丢包优化）
+target_endpoints = target_endpoints[:30]
+
+# 3. 构造 Mihomo 配置
 yaml_lines = [
     "mixed-port: 7890",
     "allow-lan: false",
@@ -101,10 +97,10 @@ yaml_lines = [
 ]
 
 node_names = []
-for idx, ep in enumerate(balanced_endpoints, 1):
+for idx, ep in enumerate(target_endpoints, 1):
     host, port = ep.split(":")
     assigned_sni = SNI_POOL[(idx - 1) % len(SNI_POOL)]
-    name = f"WARP-H2-{idx:02d}-{port}"
+    name = f"WARP-极速-{idx:02d}-{port}"
     node_names.append(name)
 
     yaml_lines.extend([
@@ -127,7 +123,6 @@ for idx, ep in enumerate(balanced_endpoints, 1):
         ""
     ])
 
-# 6. 精细化策略组架构（主通道 + 自动优选 + 故障转移）
 yaml_lines.extend([
     "proxy-groups:",
     "  - name: 🚀 默认代理",
@@ -141,7 +136,7 @@ yaml_lines.extend([
     "  - name: 🤖 人工智能",
     "    type: select",
     "    proxies:",
-    "      - 🛡️ 故障转移",   # AI 优先走稳固不乱跳的节点，防止断联报错
+    "      - 🛡️ 故障转移",
     "      - ⚡ 自动优选",
     "      - 🚀 默认代理",
     "",
@@ -173,45 +168,32 @@ yaml_lines.extend([
     "    lazy: true",
     "    proxies:"
 ] + [f"      - '{name}'" for name in node_names] + [
-    ""
-])
-
-# 7. 全场景高精分流规则
-yaml_lines.extend([
+    "",
     "rules:",
     "  - GEOIP,private,DIRECT,no-resolve",
     "  - GEOIP,lan,DIRECT,no-resolve",
-    "",
-    "  # 拦截 BT/P2P 下载流量走 WARP",
     "  - PROCESS-NAME,qbittorrent.exe,DIRECT",
     "  - PROCESS-NAME,Transmission.exe,DIRECT",
     "  - PROCESS-NAME,Thunder.exe,DIRECT",
     "  - PROCESS-NAME,BitComet.exe,DIRECT",
     "  - DST-PORT,6881-6889,DIRECT",
-    "",
     "  - DST-PORT,123,DIRECT",
     "  - DST-PORT,53,DIRECT",
-    "",
     "  - GEOSITE,category-ads-all,🛑 广告拦截",
-    "",
     "  - GEOSITE,openai,🤖 人工智能",
     "  - GEOSITE,anthropic,🤖 人工智能",
     "  - DOMAIN-SUFFIX,oaistatic.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,oaiusercontent.com,🤖 人工智能",
-    "",
     "  - GEOSITE,youtube,📺 国际媒体",
     "  - GEOSITE,netflix,📺 国际媒体",
     "  - GEOSITE,spotify,📺 国际媒体",
-    "",
     "  - GEOSITE,cn,DIRECT",
     "  - GEOSITE,category-games@cn,DIRECT",
     "  - GEOIP,CN,DIRECT",
-    "",
     "  - MATCH,🚀 默认代理"
 ])
 
 with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
     f.write("\n".join(yaml_lines))
 
-print(f"[OK] 成功修复！100% 采用官方真实存活 MASQUE-H2 节点！")
-print(f"[OK] 已混编写入 {len(balanced_endpoints)} 个真实节点至: {OUTPUT_PATH}")
+print(f"[OK] 成功生成配置！共写入 {len(target_endpoints)} 个节点至: {OUTPUT_PATH}")
