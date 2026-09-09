@@ -129,7 +129,7 @@ for region, landings in opera_regions.items():
                 f"skip-cert-verify: false, dialer-proxy: '{base_name}'}}"
             )
 
-# 5. 构建完整 YAML 配置（完美补齐 DNS 与嗅探补丁）
+# 5. 构建完整 YAML 配置
 yaml_lines = [
     "mixed-port: 7890",
     "allow-lan: false",
@@ -148,8 +148,7 @@ yaml_lines = [
     "    TLS:",
     "      ports: [443, 8443]",
     "  skip-domain:",
-    "    - '+.push.apple.com'",
-    "    - '+.apple.com'",
+    "    - '+.push.apple.com'",  # 只跳过苹果纯推送，不跳过普通网页与商店
     "",
     "dns:",
     "  enable: true",
@@ -179,7 +178,7 @@ yaml_lines = [
     "proxies:"
 ] + underlying_proxies + combo_proxies
 
-# 6. 精细化策略组架构
+# 6. 精细化策略组架构（新增 🍎 苹果海外商店与服务组）
 yaml_lines.extend([
     "",
     "proxy-groups:",
@@ -188,6 +187,7 @@ yaml_lines.extend([
     "    proxies:",
     "      - ⚡ WARP极速优选",
     "      - 🤖 人工智能",
+    "      - 🗽 美洲线路",
     "      - DIRECT",
 ] + [f"      - '{name}'" for name in underlying_names] + [
     "",
@@ -200,25 +200,24 @@ yaml_lines.extend([
     "    proxies:"
 ] + [f"      - '{name}'" for name in underlying_names] + [
     "",
-    "  # 【AI专用组】针对 Gemini，首选美洲和欧洲，亚洲因为风控靠后",
+    "  # 【AI专用组】优先走美洲/欧洲落地",
     "  - name: 🤖 人工智能",
     "    type: select",
     "    proxies:",
     "      - 🗽 美洲线路",
     "      - 🌍 欧洲线路",
-    "      - 🤖 人工智能套娃",
     "      - ⚡ 亚洲线路",
+    "      - ⚡ WARP极速优选",
     "",
-    "  - name: 🤖 人工智能套娃",
-    "    type: url-test",
-    "    url: http://www.gstatic.com/generate_204",
-    "    interval: 300",
-    "    tolerance: 50",
-    "    lazy: true",
+    "  # 【苹果海外服务】专门针对海外 App Store，强制美洲/海外套娃IP，避开被踢回国区",
+    "  - name: 🍎 苹果服务",
+    "    type: select",
     "    proxies:",
     "      - 🗽 美洲线路",
-    "      - 🌍 欧洲线路",
     "      - ⚡ 亚洲线路",
+    "      - 🌍 欧洲线路",
+    "      - ⚡ WARP极速优选",
+    "      - DIRECT",
     "",
     "  - name: 🗽 美洲线路",
     "    type: url-test",
@@ -261,10 +260,10 @@ yaml_lines.extend([
     ""
 ])
 
-# 7. 全场景高精分流规则（防止出口IP分裂）
+# 7. 全场景高精分流规则
 yaml_lines.extend([
     "rules:",
-    "  # 1. 【彻底阻断 QUIC】避免走 UDP 导致握手死锁",
+    "  # 1. 彻底阻断 QUIC，避免 UDP 死锁与降速",
     "  - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT",
     "",
     "  - GEOIP,private,DIRECT,no-resolve",
@@ -280,7 +279,15 @@ yaml_lines.extend([
     "  # 广告拦截",
     "  - GEOSITE,category-ads-all,🛑 广告拦截",
     "",
-    "  # 2. 【核心修复】Gemini 依赖的 Google 会话和鉴权域，必须统一走【🤖 人工智能】，防止 IP 分裂",
+    "  # 2. 【核心修复】苹果海外商店全套 API 与静态资源，强制走代理！防止被误判回国区",
+    "  - DOMAIN-SUFFIX,apps.apple.com,🍎 苹果服务",
+    "  - DOMAIN-SUFFIX,itunes.apple.com,🍎 苹果服务",
+    "  - DOMAIN-SUFFIX,mzstatic.com,🍎 苹果服务",
+    "  - DOMAIN-SUFFIX,aaplimg.com,🍎 苹果服务",
+    "  - DOMAIN-SUFFIX,appsto.re,🍎 苹果服务",
+    "  - DOMAIN,amp-api.music.apple.com,🍎 苹果服务",
+    "",
+    "  # 3. AI 服务走专属分流组",
     "  - DOMAIN-SUFFIX,bard.google.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,gemini.google.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,aistudio.google.com,🤖 人工智能",
@@ -296,39 +303,34 @@ yaml_lines.extend([
     "  - DOMAIN-KEYWORD,gemini,🤖 人工智能",
     "  - DOMAIN-KEYWORD,bard,🤖 人工智能",
     "  - DOMAIN-KEYWORD,colab,🤖 人工智能",
-    "",
-    "  # OpenAI / ChatGPT",
     "  - GEOSITE,openai,🤖 人工智能",
     "  - DOMAIN-SUFFIX,chatgpt.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,oaistatic.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,oaiusercontent.com,🤖 人工智能",
-    "",
-    "  # Claude",
     "  - GEOSITE,anthropic,🤖 人工智能",
     "  - DOMAIN-SUFFIX,claude.ai,🤖 人工智能",
     "",
-    "  # 3. 普通 Google 搜索/生态服务（走默认代理）",
+    "  # 4. 普通 Google 生态",
     "  - DOMAIN-SUFFIX,googleapis.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,gstatic.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,google.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,googleusercontent.com,🚀 默认代理",
     "",
-    "  # 4. 海外媒体",
+    "  # 5. 海外多媒体",
     "  - GEOSITE,youtube,📺 国际媒体",
     "  - GEOSITE,netflix,📺 国际媒体",
     "  - GEOSITE,spotify,📺 国际媒体",
     "",
-    "  # 5. 大陆直连白名单",
+    "  # 6. 大陆直连白名单（苹果海外服务已在上方拦截，不会被误判）",
     "  - GEOSITE,cn,DIRECT",
     "  - GEOSITE,category-games@cn,DIRECT",
     "  - GEOIP,CN,DIRECT",
     "",
-    "  # 6. 兜底走纯 WARP 极速直连",
+    "  # 7. 兜底走默认代理",
     "  - MATCH,🚀 默认代理"
 ])
 
 with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
     f.write("\n".join(yaml_lines))
 
-print(f"[OK] 成功更新配置！防 IP 分裂逻辑已启用，美洲/欧洲优先！")
-print(f"[OK] 文件已更新至: {OUTPUT_PATH}")
+print(f"[OK] 成功修复苹果海外商店重定向问题！已生成: {OUTPUT_PATH}")
