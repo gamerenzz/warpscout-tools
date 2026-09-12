@@ -9,6 +9,3 @@
 13.250.41.68:443#🇸🇬 新加坡 AWS
 172.237.6.233:443#🇯🇵 日本 Linode
 13.124.209.180:443#🇰🇷 韩国 AWS
-masque-sg1.bestcf.eu.cc:443
-masque-jp1.bestcf.eu.cc:443
-masque-kr1.bestcf.eu.cc:443
