@@ -6,11 +6,12 @@ BEST_CONF_PATH = os.path.join(CURRENT_DIR, "best-mihomo.yaml")
 TXT_PATH = os.path.join(CURRENT_DIR, "endpoints.txt")
 OUTPUT_PATH = os.path.join(CURRENT_DIR, "warp.yaml")
 
+# 顶级 SNI 伪装池（加入最新官方原生支持 ECH 的 kitesurf 域名）
 SNI_POOL = [
-    "www.apple.com",
-    "www.visa.cn",
-    "www.tesla.cn",
-    "www.mastercard.com.cn"
+    "kitesurf.cloudflare.app",    # 【最新官方玩具】原生支持 ECH 的正版 CF 域名，特征最纯净
+    "www.visa.cn",                # 金融免封白名单
+    "www.apple.com",              # 苹果主流服务白名单
+    "www.tesla.cn"                # 跨国车企白名单
 ]
 
 # 1. 提取 WARP 凭据
@@ -136,7 +137,7 @@ for idx, item in enumerate(target_items, 1):
         ""
     ])
 
-# 笛卡尔积组合套娃节点 (只取前 8 个端点当底座，防止节点爆炸)
+# 笛卡尔积组合套娃节点 (只取前 8 个端点当底座，防止节点膨胀)
 combo_proxies = []
 region_groups = {"亚洲": [], "欧洲": [], "美洲": []}
 
@@ -202,7 +203,7 @@ yaml_lines = [
     "proxies:"
 ] + underlying_proxies + combo_proxies
 
-# 6. 精细化策略组架构 (融入亚太自建节点)
+# 6. 精细化策略组架构
 yaml_lines.extend([
     "",
     "proxy-groups:",
@@ -231,9 +232,10 @@ yaml_lines.extend([
     "      - 🗽 美洲线路",
     "      - 🌍 欧洲线路",
     "      - ⚡ 亚洲线路",
-] + [f"      - '{name}'" for name in special_ai_proxies] + [  # 把新加坡、日本、韩国等单独列入 AI 组
+] + [f"      - '{name}'" for name in special_ai_proxies] + [
     "      - ⚡ WARP极速优选",
     "",
+    "  # 【苹果海外服务】专门针对海外 App Store，强制美洲/海外套娃IP，避开被踢回国区",
     "  - name: 🍎 苹果服务",
     "    type: select",
     "    proxies:",
@@ -287,7 +289,9 @@ yaml_lines.extend([
 # 7. 全场景高精分流规则
 yaml_lines.extend([
     "rules:",
+    "  # 1. 彻底阻断 QUIC，避免 UDP 死锁与降速",
     "  - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT",
+    "",
     "  - GEOIP,private,DIRECT,no-resolve",
     "  - GEOIP,lan,DIRECT,no-resolve",
     "",
@@ -301,7 +305,7 @@ yaml_lines.extend([
     "  # 广告拦截",
     "  - GEOSITE,category-ads-all,🛑 广告拦截",
     "",
-    "  # 苹果海外商店全套走代理",
+    "  # 2. 苹果海外商店全套 API 与静态资源，强制走代理！防止被误判回国区",
     "  - DOMAIN-SUFFIX,apps.apple.com,🍎 苹果服务",
     "  - DOMAIN-SUFFIX,itunes.apple.com,🍎 苹果服务",
     "  - DOMAIN-SUFFIX,mzstatic.com,🍎 苹果服务",
@@ -309,7 +313,7 @@ yaml_lines.extend([
     "  - DOMAIN-SUFFIX,appsto.re,🍎 苹果服务",
     "  - DOMAIN,amp-api.music.apple.com,🍎 苹果服务",
     "",
-    "  # AI 服务专属分流",
+    "  # 3. AI 服务专属分流",
     "  - DOMAIN-SUFFIX,bard.google.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,gemini.google.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,aistudio.google.com,🤖 人工智能",
@@ -332,28 +336,28 @@ yaml_lines.extend([
     "  - GEOSITE,anthropic,🤖 人工智能",
     "  - DOMAIN-SUFFIX,claude.ai,🤖 人工智能",
     "",
-    "  # 普通 Google 生态",
+    "  # 4. 普通 Google 生态",
     "  - DOMAIN-SUFFIX,googleapis.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,gstatic.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,google.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,googleusercontent.com,🚀 默认代理",
     "",
-    "  # 海外多媒体",
+    "  # 5. 海外多媒体",
     "  - GEOSITE,youtube,📺 国际媒体",
     "  - GEOSITE,netflix,📺 国际媒体",
     "  - GEOSITE,spotify,📺 国际媒体",
     "",
-    "  # 大陆直连白名单",
+    "  # 6. 大陆直连白名单",
     "  - GEOSITE,cn,DIRECT",
     "  - GEOSITE,category-games@cn,DIRECT",
     "  - GEOIP,CN,DIRECT",
     "",
-    "  # 兜底",
+    "  # 7. 兜底",
     "  - MATCH,🚀 默认代理"
 ])
 
 with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
     f.write("\n".join(yaml_lines))
 
-print(f"[OK] 成功融合亚太专属反代端点！已写入 {len(target_items)} 个底座端点至: {OUTPUT_PATH}")
+print(f"[OK] 成功融合官方 kitesurf 原生伪装与亚太中继！已写入 {len(target_items)} 个底座端点至: {OUTPUT_PATH}")
 print(f"[OK] 包含专属节点: {special_ai_proxies}")
