@@ -62,17 +62,9 @@ proxy-groups:
       - 自动选择
       - 故障转移
       - "WARP直连-01 | 162.159.198.2 | 443"
-      - "默认2"
-      - "🇭🇰 香港1"
-      - "🇭🇰 香港2"
-      - "🇭🇰 香港3"
-      - "🇯🇵 日本1"
-      - "🇯🇵 日本2"
-      - "🇭🇰 香港4"
       - "🇸🇬 新加坡 AWS"
       - "🇯🇵 日本 Linode"
       - "🇰🇷 韩国 AWS"
-      - "🏄 CF Kitesurf 官方端点"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Static.png"
 
   - name: 自动选择
@@ -82,17 +74,9 @@ proxy-groups:
     tolerance: 30
     proxies:
       - "WARP直连-01 | 162.159.198.2 | 443"
-      - "默认2"
-      - "🇭🇰 香港1"
-      - "🇭🇰 香港2"
-      - "🇭🇰 香港3"
-      - "🇯🇵 日本1"
-      - "🇯🇵 日本2"
-      - "🇭🇰 香港4"
       - "🇸🇬 新加坡 AWS"
       - "🇯🇵 日本 Linode"
       - "🇰🇷 韩国 AWS"
-      - "🏄 CF Kitesurf 官方端点"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
 
   - name: 故障转移
@@ -101,17 +85,9 @@ proxy-groups:
     interval: 300
     proxies:
       - "WARP直连-01 | 162.159.198.2 | 443"
-      - "默认2"
-      - "🇭🇰 香港1"
-      - "🇭🇰 香港2"
-      - "🇭🇰 香港3"
-      - "🇯🇵 日本1"
-      - "🇯🇵 日本2"
-      - "🇭🇰 香港4"
       - "🇸🇬 新加坡 AWS"
       - "🇯🇵 日本 Linode"
       - "🇰🇷 韩国 AWS"
-      - "🏄 CF Kitesurf 官方端点"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
 
   - name: 全球直连
@@ -138,105 +114,7 @@ proxies:
     type: masque
     server: 162.159.198.2
     port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "默认2"
-    type: masque
-    server: 162.159.197.2
-    port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🇭🇰 香港1"
-    type: masque
-    server: 43.129.179.241
-    port: 8443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🇭🇰 香港2"
-    type: masque
-    server: 152.175.4.12
-    port: 65535
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🇭🇰 香港3"
-    type: masque
-    server: 103.244.88.173
-    port: 65535
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🇯🇵 日本1"
-    type: masque
-    server: 151.242.164.2
-    port: 65534
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🇯🇵 日本2"
-    type: masque
-    server: 158.101.89.186
-    port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🇭🇰 香港4"
-    type: masque
-    server: 45.87.102.254
-    port: 65535
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
+    private-key: MHcCAQEEIJno+z6a8LfYs9NxNnfWSY+J8vDFmiIEsOWMzxunL6vnoAoGCCqGSM49AwEHoUQDQgAEKD8rdxdlgZ6DUWayK4dAuWJbRe9IIj6CtBDHDgaAk28TaNULpq00aNO+3yA09z+J8ry6ATCvdXXtfxClHXEqpA==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -250,7 +128,7 @@ proxies:
     type: masque
     server: 13.250.41.68
     port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
+    private-key: MHcCAQEEIJno+z6a8LfYs9NxNnfWSY+J8vDFmiIEsOWMzxunL6vnoAoGCCqGSM49AwEHoUQDQgAEKD8rdxdlgZ6DUWayK4dAuWJbRe9IIj6CtBDHDgaAk28TaNULpq00aNO+3yA09z+J8ry6ATCvdXXtfxClHXEqpA==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -264,7 +142,7 @@ proxies:
     type: masque
     server: 172.237.6.233
     port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
+    private-key: MHcCAQEEIJno+z6a8LfYs9NxNnfWSY+J8vDFmiIEsOWMzxunL6vnoAoGCCqGSM49AwEHoUQDQgAEKD8rdxdlgZ6DUWayK4dAuWJbRe9IIj6CtBDHDgaAk28TaNULpq00aNO+3yA09z+J8ry6ATCvdXXtfxClHXEqpA==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -278,21 +156,7 @@ proxies:
     type: masque
     server: 13.124.209.180
     port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "🏄 CF Kitesurf 官方端点"
-    type: masque
-    server: kitesurf.cloudflare.app
-    port: 443
-    private-key: MHcCAQEEIH2Oa5nyBnwoY8AbLqLYNVjPV7twgK3lfQ4qhVTZJBZGoAoGCCqGSM49AwEHoUQDQgAErcBZTlNmF4OEN+AX1T1MMrt5tccBsOU5GaA3lF4qGKvYyNmt/StOjJcORRmz7cmqjWzmcgVQ7oHhqvyyGnNUng==
+    private-key: MHcCAQEEIJno+z6a8LfYs9NxNnfWSY+J8vDFmiIEsOWMzxunL6vnoAoGCCqGSM49AwEHoUQDQgAEKD8rdxdlgZ6DUWayK4dAuWJbRe9IIj6CtBDHDgaAk28TaNULpq00aNO+3yA09z+J8ry6ATCvdXXtfxClHXEqpA==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
