@@ -85,6 +85,7 @@ proxy-groups:
       - "🇰🇷 韩国 AWS"
       - "🇯🇵 日本甲骨文"
       - "🇭🇰 香港腾讯云"
+      - "🇭🇰 香港腾讯云2"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Static.png"
 
   - name: 自动选择
@@ -117,6 +118,7 @@ proxy-groups:
       - "🇰🇷 韩国 AWS"
       - "🇯🇵 日本甲骨文"
       - "🇭🇰 香港腾讯云"
+      - "🇭🇰 香港腾讯云2"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
 
   - name: 故障转移
@@ -148,6 +150,7 @@ proxy-groups:
       - "🇰🇷 韩国 AWS"
       - "🇯🇵 日本甲骨文"
       - "🇭🇰 香港腾讯云"
+      - "🇭🇰 香港腾讯云2"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
 
   - name: 全球直连
@@ -174,7 +177,7 @@ proxies:
     type: masque
     server: 162.159.198.112
     port: 4500
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -188,7 +191,7 @@ proxies:
     type: masque
     server: 162.159.199.166
     port: 1701
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -202,7 +205,7 @@ proxies:
     type: masque
     server: 162.159.198.138
     port: 500
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -216,7 +219,7 @@ proxies:
     type: masque
     server: 162.159.199.18
     port: 4500
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -230,7 +233,7 @@ proxies:
     type: masque
     server: 162.159.198.112
     port: 8095
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -244,7 +247,7 @@ proxies:
     type: masque
     server: 162.159.198.112
     port: 500
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -258,7 +261,7 @@ proxies:
     type: masque
     server: 162.159.199.84
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -272,7 +275,7 @@ proxies:
     type: masque
     server: 162.159.198.112
     port: 1701
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -286,7 +289,7 @@ proxies:
     type: masque
     server: 162.159.199.243
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -300,7 +303,7 @@ proxies:
     type: masque
     server: 162.159.199.18
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -314,7 +317,7 @@ proxies:
     type: masque
     server: 162.159.199.226
     port: 8443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -328,7 +331,7 @@ proxies:
     type: masque
     server: 162.159.199.226
     port: 4500
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -342,7 +345,7 @@ proxies:
     type: masque
     server: 162.159.199.18
     port: 4443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -356,7 +359,7 @@ proxies:
     type: masque
     server: 162.159.199.226
     port: 1701
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -370,7 +373,7 @@ proxies:
     type: masque
     server: 162.159.199.122
     port: 4443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -384,7 +387,7 @@ proxies:
     type: masque
     server: 162.159.199.122
     port: 8095
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -398,7 +401,7 @@ proxies:
     type: masque
     server: 162.159.198.138
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -412,7 +415,7 @@ proxies:
     type: masque
     server: 162.159.199.226
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -426,7 +429,7 @@ proxies:
     type: masque
     server: 162.159.199.166
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -440,7 +443,7 @@ proxies:
     type: masque
     server: 13.250.41.68
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -454,7 +457,7 @@ proxies:
     type: masque
     server: 172.237.6.233
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -468,7 +471,7 @@ proxies:
     type: masque
     server: 13.124.209.180
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -482,7 +485,7 @@ proxies:
     type: masque
     server: 158.101.89.186
     port: 443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -496,7 +499,21 @@ proxies:
     type: masque
     server: 43.129.179.241
     port: 8443
-    private-key: MHcCAQEEIHtjgl8zkJiFSMzc3Jryb8kowmTbiBDLsLJBHMCK4NEWoAoGCCqGSM49AwEHoUQDQgAEXxjK6PmuUUYzlgk1og8Gi+W/T4bzzmQYryOrnrwEXQJLOxEoWWfXnSoGHpMnD2IGnCKVJsNdHtluac1+N0bvOA==
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
+    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
+    ip: 172.16.0.2
+    mtu: 1280
+    udp: true
+    remote-dns-resolve: true
+    congestion-controller: bbr
+    dns: [ 1.1.1.1, 8.8.8.8 ]
+    sni: www.microsoft.com
+
+  - name: "🇭🇰 香港腾讯云2"
+    type: masque
+    server: 152.175.4.12
+    port: 65535
+    private-key: MHcCAQEEILD0fcsBHL3+vsQCQ0V+6+7kPG1s75nSa+ngvqMFqk+doAoGCCqGSM49AwEHoUQDQgAExtZgeClvYKXqnCDPkNsrqGvFNuF7eQcHO4gbm01poFo0b46B9pC+oJNZdOc538uPElwyWlDAL9mAUvDUo/5wIw==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
