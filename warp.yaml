@@ -1,49 +1,59 @@
 mixed-port: 7890
-allow-lan: false
+allow-lan: true
+bind-address: '*'
 mode: rule
 log-level: info
 ipv6: false
 unified-delay: true
 tcp-concurrent: true
-
-sniffer:
-  enable: true
-  sniff:
-    HTTP:
-      ports: [80, 8080-8880]
-      override-destination: true
-    TLS:
-      ports: [443, 8443]
-  skip-domain:
-    - '+.push.apple.com'
+geodata-mode: true
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+geo-auto-update: true
+geo-update-interval: 24
+global-ua: clash.meta
 
 dns:
   enable: true
   ipv6: false
+  listen: 0.0.0.0:1053
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-    - '+.lan'
-    - '+.local'
-    - '*.msftconnecttest.com'
-    - '*.msftncsi.com'
+    - "*.lan"
+    - "*.local"
+    - "*.arpa"
+    - time.*.com
+    - ntp.*.com
+    - +.market.xiaomi.com
+    - localhost.ptlogin2.qq.com
+    - "*.msftncsi.com"
+    - www.msftconnecttest.com
+  use-hosts: true
+  cache-algorithm: arc
+  prefer-h3: true
+  respect-rules: true
+
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
+
   nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
+  nameserver-policy:
+    "geosite:cn":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "geosite:geolocation-!cn":
+      - https://cloudflare-dns.com/dns-query#proxy=端点选择
+      - https://dns.google/dns-query#proxy=端点选择
+
   proxy-server-nameserver:
     - 223.5.5.5
     - 119.29.29.29
-  nameserver-policy:
-    'geosite:cn':
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
-    # 【关键修复】海外域名解析必须挂接代理，杜绝返回错配 IP
-    'geosite:geolocation-!cn':
-      - 'https://cloudflare-dns.com/dns-query#proxy=🚀 默认代理'
-      - 'https://dns.google/dns-query#proxy=🚀 默认代理'
 
 proxies:
   - name: 'WARP直连-01'
@@ -51,394 +61,367 @@ proxies:
     server: '162.159.198.112'
     port: 4500
     network: h2
-    sni: 'kitesurf.cloudflare.app'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.microsoft.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-02'
     type: masque
     server: '162.159.199.166'
     port: 1701
     network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'kitesurf.cloudflare.app'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-03'
     type: masque
     server: '162.159.198.138'
     port: 500
     network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.visa.cn'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-04'
     type: masque
     server: '162.159.199.18'
     port: 4500
     network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.apple.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-05'
     type: masque
     server: '162.159.198.112'
     port: 8095
     network: h2
-    sni: 'kitesurf.cloudflare.app'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.microsoft.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-06'
     type: masque
     server: '162.159.198.112'
     port: 500
     network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'kitesurf.cloudflare.app'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-07'
     type: masque
     server: '162.159.199.84'
     port: 443
     network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.visa.cn'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-08'
     type: masque
     server: '162.159.198.112'
     port: 1701
     network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.apple.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-09'
     type: masque
     server: '162.159.199.243'
     port: 443
     network: h2
-    sni: 'kitesurf.cloudflare.app'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.microsoft.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-10'
     type: masque
     server: '162.159.199.18'
     port: 443
     network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'kitesurf.cloudflare.app'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-11'
     type: masque
     server: '162.159.199.226'
     port: 8443
     network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.visa.cn'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-12'
     type: masque
     server: '162.159.199.226'
     port: 4500
     network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.apple.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-13'
     type: masque
     server: '162.159.199.18'
     port: 4443
     network: h2
-    sni: 'kitesurf.cloudflare.app'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.microsoft.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-14'
     type: masque
     server: '162.159.199.226'
     port: 1701
     network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'kitesurf.cloudflare.app'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-15'
     type: masque
     server: '162.159.199.122'
     port: 4443
     network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.visa.cn'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-16'
     type: masque
     server: '162.159.199.122'
     port: 8095
     network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.apple.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-17'
     type: masque
     server: '162.159.198.138'
     port: 443
     network: h2
-    sni: 'kitesurf.cloudflare.app'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.microsoft.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-18'
     type: masque
     server: '162.159.199.226'
     port: 443
     network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'kitesurf.cloudflare.app'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: 'WARP直连-19'
     type: masque
     server: '162.159.199.166'
     port: 443
     network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.visa.cn'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: '🇸🇬 新加坡 AWS'
     type: masque
     server: '13.250.41.68'
     port: 443
     network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.apple.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: '🇯🇵 日本 Linode'
     type: masque
     server: '172.237.6.233'
     port: 443
     network: h2
-    sni: 'kitesurf.cloudflare.app'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.microsoft.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: '🇰🇷 韩国 AWS'
     type: masque
     server: '13.124.209.180'
     port: 443
     network: h2
-    sni: 'www.visa.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'kitesurf.cloudflare.app'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: '🇯🇵 日本甲骨文'
     type: masque
     server: '158.101.89.186'
     port: 443
     network: h2
-    sni: 'www.apple.com'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.visa.cn'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
   - name: '🇭🇰 香港腾讯云'
     type: masque
     server: '43.129.179.241'
     port: 8443
     network: h2
-    sni: 'www.tesla.cn'
-    private-key: 'MHcCAQEEIAnvCowbBp4/rNkUwXNN7PY0CHozPX2G93N6GBesXaU4oAoGCCqGSM49AwEHoUQDQgAEbpxwwuqjVUgXRPFlOe7ra+RiF0boHDt1UhYADCDym8dPiGlbn9yuCI+hZ+nU7C4pCXglPQNnJ7ePxQ5AZwlTQQ=='
+    sni: 'www.apple.com'
+    private-key: 'MHcCAQEEIKmWu17DUBWXrwyyThmMQrg+BxbsZLbMU5fngDdk8YWIoAoGCCqGSM49AwEHoUQDQgAE2z9LoFOAd4+sntuD1LBaMx7DdgoigPcVULwSeYbflwL7ffAy8jkiItAIdI1QGxie5XqaSZZM0cGHhdyyUep7rA=='
     public-key: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w=='
     ip: '172.16.0.2'
+    mtu: 1280
     udp: true
     remote-dns-resolve: true
     congestion-controller: bbr
-    dns: [1.1.1.1, 8.8.8.8]
-
-  - {name: '亚洲1@WARP直连-01', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-01'}
-  - {name: '亚洲1@WARP直连-02', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-02'}
-  - {name: '亚洲1@WARP直连-03', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-03'}
-  - {name: '亚洲1@WARP直连-04', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-04'}
-  - {name: '亚洲1@WARP直连-05', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-05'}
-  - {name: '亚洲1@WARP直连-06', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-06'}
-  - {name: '亚洲1@WARP直连-07', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-07'}
-  - {name: '亚洲1@WARP直连-08', type: http, server: 77.111.245.16, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-08'}
-  - {name: '亚洲2@WARP直连-01', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-01'}
-  - {name: '亚洲2@WARP直连-02', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-02'}
-  - {name: '亚洲2@WARP直连-03', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-03'}
-  - {name: '亚洲2@WARP直连-04', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-04'}
-  - {name: '亚洲2@WARP直连-05', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-05'}
-  - {name: '亚洲2@WARP直连-06', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-06'}
-  - {name: '亚洲2@WARP直连-07', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-07'}
-  - {name: '亚洲2@WARP直连-08', type: http, server: 77.111.245.15, port: 443, username: C95C2410A4E0C7A1F0A8242A24ECC5BCF8B54E64, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiI4VHE5TmVEVFpCa1FYcURlTnRmWWwxM0xDY1dGdU9iblpubm1qZDRwb1BrIiwieSI6IlhhZEV2NnRweW9vcGFQZHVRampqZlc4Q0s1ZklVTXZ5RGlYTUhhVXBqNGcifX0.E7TTkIc15MLK7b4eAV4RCdHkSyLAP-SxnUugaUMkWcYQF_nULOrCQA.gqcD1OCMIlIrxTmx.eOhPhJFg1y0CoihYvr21QHvol_p5daPVPtojOW3LIwczNyur23U3nlQEquN4FFJifa3nsS5I4ob6FEHZa17iK52fdHn1bsO-3hENpqUAX_h9P99r-fNcFkgWjcJYv-NEI45lM1SvYe7icThWoKN17SxQlAdWXDE7qvA5J7jDsrJJmrqg1Fo9QFfIx3lbckCdat7_5L6ANOr25Wl5I_7RdvuFKYG99izCBvDX_RAGC_-aBpYVV8mzLV7C0D2NTZIqjrYy5qJvuBP-5aBjpZT8hiDCaJlvfNNy7wNulmsAOH_XJyAlsc5OmSROuJXsF98HnT4o9VsVzZbRww3bb8cPTp37TJTSmE0sVkAwOjse1txh6ZPqen99JyqMG2vm_d8P0RMGUKSFmN22hC5AUlF8PQ9lzrFpXQkdNRHrXF9tiIp7g54MASrNp7qVeHxUtw7WgoWQIYq1_pOLNww.SZxCZbBvqJgLfRhhch7YBw, tls: true, sni: as1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-08'}
-  - {name: '欧洲1@WARP直连-01', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-01'}
-  - {name: '欧洲1@WARP直连-02', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-02'}
-  - {name: '欧洲1@WARP直连-03', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-03'}
-  - {name: '欧洲1@WARP直连-04', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-04'}
-  - {name: '欧洲1@WARP直连-05', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-05'}
-  - {name: '欧洲1@WARP直连-06', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-06'}
-  - {name: '欧洲1@WARP直连-07', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-07'}
-  - {name: '欧洲1@WARP直连-08', type: http, server: 77.111.247.84, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-08'}
-  - {name: '欧洲2@WARP直连-01', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-01'}
-  - {name: '欧洲2@WARP直连-02', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-02'}
-  - {name: '欧洲2@WARP直连-03', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-03'}
-  - {name: '欧洲2@WARP直连-04', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-04'}
-  - {name: '欧洲2@WARP直连-05', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-05'}
-  - {name: '欧洲2@WARP直连-06', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-06'}
-  - {name: '欧洲2@WARP直连-07', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-07'}
-  - {name: '欧洲2@WARP直连-08', type: http, server: 77.111.247.80, port: 443, username: 97FF0BB83F650D6B304ABFA23D38DED257603496, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJaa0JjQVZtTmxFRURBOWJFT2FkZG4tWmw4eDE0N2xSUkhXdUZjTi1jOF9NIiwieSI6IjBtdTFFVWNkb0NQYV9fMUVPYXFJUVdNRW1rLTlhSGNBei0zMzF2NUtqMUEifX0.oIZ0gE4WH38-71nMhc-ywUCdkwkDN6SeZsBwAt0MEkBtlnfoTkjdcw.RdJl1_UT1RAnQ1FC.S1_SrOUynX1w90O8UbflOeSHD4j0tBN2pGvkor9ViArwYNBP503VeZ4I6k_oTUmzVdYxiwkcT6O2NJDHErKCKsGxTVYOx0tso0bnA3iqbYWBk1jzVcNcMAZBB7vpSr0HIQGesYpwUScKembd8N8dCCFu-z5fe0PqyEiTt2q2GQ-A-LIQYVFkvQpiPhTy6PUygr53q5BLv0aVXk20oSFetaoRds8RCAn8Cglj4uqpWyHpw5BIOKZ3NKnibftLX2xfbJ5vxZR5Dp_gBgtgXbN7c573BP7wiHI5TxcBapeoi_87RaZmQK2Cgtkt9bQCSNkuuJ35Y44TXSUy2PZjN_Crn6R-koQietXaT-iILcW-wLRsCrQPV1wI5jkE3cxPc9FqgcZtxN_WH9mIde_6OqK7KSy1u9aiHsdziR8pyl3bmoG8Ow11uA_5FZAgQNfCh41KG0VHI4ulR5Gqn5w.EFvrb4WSrZ0rj_FgguRhfg, tls: true, sni: eu1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-08'}
-  - {name: '美洲1@WARP直连-01', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-01'}
-  - {name: '美洲1@WARP直连-02', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-02'}
-  - {name: '美洲1@WARP直连-03', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-03'}
-  - {name: '美洲1@WARP直连-04', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-04'}
-  - {name: '美洲1@WARP直连-05', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-05'}
-  - {name: '美洲1@WARP直连-06', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-06'}
-  - {name: '美洲1@WARP直连-07', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-07'}
-  - {name: '美洲1@WARP直连-08', type: http, server: 77.111.246.59, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am0.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-08'}
-  - {name: '美洲2@WARP直连-01', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-01'}
-  - {name: '美洲2@WARP直连-02', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-02'}
-  - {name: '美洲2@WARP直连-03', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-03'}
-  - {name: '美洲2@WARP直连-04', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-04'}
-  - {name: '美洲2@WARP直连-05', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-05'}
-  - {name: '美洲2@WARP直连-06', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-06'}
-  - {name: '美洲2@WARP直连-07', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-07'}
-  - {name: '美洲2@WARP直连-08', type: http, server: 77.111.246.54, port: 443, username: B362B3A1F99A288B4AB49D57D88355FD2D2FC039, password: eyJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJMSndHSmZzSW5xQ2ZSQTVsSDd3eFpIMTZXU3hsYzVadXBjTmJQcUZwN29JIiwieSI6ImxhQjhYajdUcE4wTHM3YnFIWm1NaTNqSU85cUdPSWJmckxaUnUtZXlScE0ifX0.N1TYxdE8FMJ4ZV7PzsAD1v8YTYZs_bsLUDCfmVWebCQHi3PJyqjEsg.qcGwA5K9ZzzwMs-Y.lAh5qzHPWq74FOmjJrTdSa5WFIIgxWUUbHywm5pxZjP1xBaYiNATH8h-mcWRUIZdjoX9LUQYq4hV9XfYUTRx3XoqsMUqjr_l6r1pbiqpUOLHrzo6npa7IvtTXoZEQ1oX_NK8XYyJ7lGRbb3GDSeGvvApy79FyD47DQIgoGNeWvz4TlDzWV2UPMFuYt2onXllMb9Z7mGwEknLjhEeNKk9MA0xWBtxtaq8efsG5fQ6glp5t6T1j04GAN-EKcEIijEqZGOR38S7Pn-t40qs1E6T-KuvgsaroQZmIPziUW877dHoY7_8IPYl9W5sX32l9MUQ0mSfMlzlEmcABhItDWGCZNVzi2aOiVGkVWCzN5APoTd1t6g7DXQXjbTSP2fA1tZmnK_8j8LnSOOXT1557KDtk2Bm2atOjujJQXfUswyPumdgY8ydtt_K8lcLGj1EDXoesMxjrKKAYmCYrb4.fomQE8D7sgA5ZMfxwKMA4g, tls: true, sni: am1.sec-tunnel.com, skip-cert-verify: false, dialer-proxy: 'WARP直连-08'}
+    dns: [ 1.1.1.1, 8.8.8.8 ]
 
 proxy-groups:
-  - name: 🚀 默认代理
+  - name: 端点选择
     type: select
     proxies:
-      - ⚡ WARP极速优选
-      - 🤖 人工智能
-      - 🗽 美洲线路
-      - DIRECT
+      - 自动选择
+      - 故障转移
       - 'WARP直连-01'
       - 'WARP直连-02'
       - 'WARP直连-03'
@@ -463,13 +446,13 @@ proxy-groups:
       - '🇰🇷 韩国 AWS'
       - '🇯🇵 日本甲骨文'
       - '🇭🇰 香港腾讯云'
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Static.png"
 
-  - name: ⚡ WARP极速优选
+  - name: 自动选择
     type: url-test
     url: https://cp.cloudflare.com/generate_204
     interval: 300
-    tolerance: 50
-    lazy: true
+    tolerance: 30
     proxies:
       - 'WARP直连-01'
       - 'WARP直连-02'
@@ -495,162 +478,54 @@ proxy-groups:
       - '🇰🇷 韩国 AWS'
       - '🇯🇵 日本甲骨文'
       - '🇭🇰 香港腾讯云'
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
 
-  # 【AI专用组】日本/新加坡反代排前面，支持手动钦定且全套 Google 一起走！
-  - name: 🤖 人工智能
-    type: select
+  - name: 故障转移
+    type: fallback
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
     proxies:
+      - 'WARP直连-01'
+      - 'WARP直连-02'
+      - 'WARP直连-03'
+      - 'WARP直连-04'
+      - 'WARP直连-05'
+      - 'WARP直连-06'
+      - 'WARP直连-07'
+      - 'WARP直连-08'
+      - 'WARP直连-09'
+      - 'WARP直连-10'
+      - 'WARP直连-11'
+      - 'WARP直连-12'
+      - 'WARP直连-13'
+      - 'WARP直连-14'
+      - 'WARP直连-15'
+      - 'WARP直连-16'
+      - 'WARP直连-17'
+      - 'WARP直连-18'
+      - 'WARP直连-19'
       - '🇸🇬 新加坡 AWS'
       - '🇯🇵 日本 Linode'
       - '🇰🇷 韩国 AWS'
       - '🇯🇵 日本甲骨文'
       - '🇭🇰 香港腾讯云'
-      - 🗽 美洲线路
-      - 🌍 欧洲线路
-      - ⚡ 亚洲线路
-      - ⚡ WARP极速优选
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
 
-  - name: 🍎 苹果服务
+  - name: 全球直连
     type: select
-    proxies:
-      - 🗽 美洲线路
-      - ⚡ 亚洲线路
-      - ⚡ WARP极速优选
-      - DIRECT
+    proxies: [DIRECT]
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png"
 
-  - name: 🗽 美洲线路
-    type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    lazy: true
-    proxies:
-      - '美洲1@WARP直连-01'
-      - '美洲1@WARP直连-02'
-      - '美洲1@WARP直连-03'
-      - '美洲1@WARP直连-04'
-      - '美洲1@WARP直连-05'
-      - '美洲1@WARP直连-06'
-      - '美洲1@WARP直连-07'
-      - '美洲1@WARP直连-08'
-      - '美洲2@WARP直连-01'
-      - '美洲2@WARP直连-02'
-      - '美洲2@WARP直连-03'
-      - '美洲2@WARP直连-04'
-      - '美洲2@WARP直连-05'
-      - '美洲2@WARP直连-06'
-      - '美洲2@WARP直连-07'
-      - '美洲2@WARP直连-08'
-
-  - name: 🌍 欧洲线路
-    type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    lazy: true
-    proxies:
-      - '欧洲1@WARP直连-01'
-      - '欧洲1@WARP直连-02'
-      - '欧洲1@WARP直连-03'
-      - '欧洲1@WARP直连-04'
-      - '欧洲1@WARP直连-05'
-      - '欧洲1@WARP直连-06'
-      - '欧洲1@WARP直连-07'
-      - '欧洲1@WARP直连-08'
-      - '欧洲2@WARP直连-01'
-      - '欧洲2@WARP直连-02'
-      - '欧洲2@WARP直连-03'
-      - '欧洲2@WARP直连-04'
-      - '欧洲2@WARP直连-05'
-      - '欧洲2@WARP直连-06'
-      - '欧洲2@WARP直连-07'
-      - '欧洲2@WARP直连-08'
-
-  - name: ⚡ 亚洲线路
-    type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    lazy: true
-    proxies:
-      - '亚洲1@WARP直连-01'
-      - '亚洲1@WARP直连-02'
-      - '亚洲1@WARP直连-03'
-      - '亚洲1@WARP直连-04'
-      - '亚洲1@WARP直连-05'
-      - '亚洲1@WARP直连-06'
-      - '亚洲1@WARP直连-07'
-      - '亚洲1@WARP直连-08'
-      - '亚洲2@WARP直连-01'
-      - '亚洲2@WARP直连-02'
-      - '亚洲2@WARP直连-03'
-      - '亚洲2@WARP直连-04'
-      - '亚洲2@WARP直连-05'
-      - '亚洲2@WARP直连-06'
-      - '亚洲2@WARP直连-07'
-      - '亚洲2@WARP直连-08'
-
-  - name: 📺 国际媒体
+  - name: 全球拦截
     type: select
-    proxies:
-      - ⚡ WARP极速优选
-      - 🚀 默认代理
-
-  - name: 🛑 广告拦截
-    type: select
-    proxies:
-      - REJECT
-      - DIRECT
+    proxies: [REJECT, 端点选择, DIRECT]
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png"
 
 rules:
-  - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOIP,lan,DIRECT,no-resolve
-
-  # 规避 BT/P2P 下载
-  - PROCESS-NAME,qbittorrent.exe,DIRECT
-  - PROCESS-NAME,Thunder.exe,DIRECT
-  - DST-PORT,6881-6889,DIRECT
-  - DST-PORT,123,DIRECT
-  - DST-PORT,53,DIRECT
-
-  # 广告拦截
-  - GEOSITE,category-ads-all,🛑 广告拦截
-
-  # 苹果海外商店全套走代理，杜绝重定向
-  - DOMAIN-SUFFIX,apps.apple.com,🍎 苹果服务
-  - DOMAIN-SUFFIX,itunes.apple.com,🍎 苹果服务
-  - DOMAIN-SUFFIX,mzstatic.com,🍎 苹果服务
-  - DOMAIN-SUFFIX,aaplimg.com,🍎 苹果服务
-  - DOMAIN-SUFFIX,appsto.re,🍎 苹果服务
-  - DOMAIN,amp-api.music.apple.com,🍎 苹果服务
-
-  # 【核心修复】Gemini + 所有 Google 基础认证统一走【🤖 人工智能】，杜绝前后台 IP 分裂！
-  - GEOSITE,google,🤖 人工智能
-  - DOMAIN-SUFFIX,google.com,🤖 人工智能
-  - DOMAIN-SUFFIX,googleapis.com,🤖 人工智能
-  - DOMAIN-SUFFIX,gstatic.com,🤖 人工智能
-  - DOMAIN-SUFFIX,googleusercontent.com,🤖 人工智能
-  - DOMAIN-KEYWORD,gemini,🤖 人工智能
-  - DOMAIN-KEYWORD,bard,🤖 人工智能
-
-  # OpenAI / ChatGPT / Claude
-  - GEOSITE,openai,🤖 人工智能
-  - DOMAIN-SUFFIX,chatgpt.com,🤖 人工智能
-  - DOMAIN-SUFFIX,oaistatic.com,🤖 人工智能
-  - DOMAIN-SUFFIX,oaiusercontent.com,🤖 人工智能
-  - GEOSITE,anthropic,🤖 人工智能
-  - DOMAIN-SUFFIX,claude.ai,🤖 人工智能
-
-  # 海外多媒体
-  - GEOSITE,youtube,📺 国际媒体
-  - GEOSITE,netflix,📺 国际媒体
-  - GEOSITE,spotify,📺 国际媒体
-
-  # 大陆直连白名单
-  - GEOSITE,cn,DIRECT
-  - GEOSITE,category-games@cn,DIRECT
-  - GEOIP,CN,DIRECT
-
-  # 兜底
-  - MATCH,🚀 默认代理
+  - GEOIP,private,DIRECT
+  - GEOSITE,private,DIRECT
+  - GEOSITE,category-ads-all,全球拦截
+  - GEOSITE,gfw,端点选择
+  - GEOSITE,cn,全球直连
+  - GEOIP,CN,全球直连
+  - MATCH,端点选择
