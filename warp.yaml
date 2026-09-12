@@ -61,25 +61,6 @@ proxy-groups:
     proxies:
       - 自动选择
       - 故障转移
-      - "WARP直连-01 | 162.159.198.112 | 4500"
-      - "WARP直连-02 | 162.159.199.166 | 1701"
-      - "WARP直连-03 | 162.159.198.138 | 500"
-      - "WARP直连-04 | 162.159.199.18 | 4500"
-      - "WARP直连-05 | 162.159.198.112 | 8095"
-      - "WARP直连-06 | 162.159.198.112 | 500"
-      - "WARP直连-07 | 162.159.199.84 | 443"
-      - "WARP直连-08 | 162.159.198.112 | 1701"
-      - "WARP直连-09 | 162.159.199.243 | 443"
-      - "WARP直连-10 | 162.159.199.18 | 443"
-      - "WARP直连-11 | 162.159.199.226 | 8443"
-      - "WARP直连-12 | 162.159.199.226 | 4500"
-      - "WARP直连-13 | 162.159.199.18 | 4443"
-      - "WARP直连-14 | 162.159.199.226 | 1701"
-      - "WARP直连-15 | 162.159.199.122 | 4443"
-      - "WARP直连-16 | 162.159.199.122 | 8095"
-      - "WARP直连-17 | 162.159.198.138 | 443"
-      - "WARP直连-18 | 162.159.199.226 | 443"
-      - "WARP直连-19 | 162.159.199.166 | 443"
       - "默认1"
       - "🇭🇰 香港1"
       - "🇭🇰 香港2"
@@ -98,25 +79,6 @@ proxy-groups:
     interval: 300
     tolerance: 30
     proxies:
-      - "WARP直连-01 | 162.159.198.112 | 4500"
-      - "WARP直连-02 | 162.159.199.166 | 1701"
-      - "WARP直连-03 | 162.159.198.138 | 500"
-      - "WARP直连-04 | 162.159.199.18 | 4500"
-      - "WARP直连-05 | 162.159.198.112 | 8095"
-      - "WARP直连-06 | 162.159.198.112 | 500"
-      - "WARP直连-07 | 162.159.199.84 | 443"
-      - "WARP直连-08 | 162.159.198.112 | 1701"
-      - "WARP直连-09 | 162.159.199.243 | 443"
-      - "WARP直连-10 | 162.159.199.18 | 443"
-      - "WARP直连-11 | 162.159.199.226 | 8443"
-      - "WARP直连-12 | 162.159.199.226 | 4500"
-      - "WARP直连-13 | 162.159.199.18 | 4443"
-      - "WARP直连-14 | 162.159.199.226 | 1701"
-      - "WARP直连-15 | 162.159.199.122 | 4443"
-      - "WARP直连-16 | 162.159.199.122 | 8095"
-      - "WARP直连-17 | 162.159.198.138 | 443"
-      - "WARP直连-18 | 162.159.199.226 | 443"
-      - "WARP直连-19 | 162.159.199.166 | 443"
       - "默认1"
       - "🇭🇰 香港1"
       - "🇭🇰 香港2"
@@ -134,25 +96,6 @@ proxy-groups:
     url: https://cp.cloudflare.com/generate_204
     interval: 300
     proxies:
-      - "WARP直连-01 | 162.159.198.112 | 4500"
-      - "WARP直连-02 | 162.159.199.166 | 1701"
-      - "WARP直连-03 | 162.159.198.138 | 500"
-      - "WARP直连-04 | 162.159.199.18 | 4500"
-      - "WARP直连-05 | 162.159.198.112 | 8095"
-      - "WARP直连-06 | 162.159.198.112 | 500"
-      - "WARP直连-07 | 162.159.199.84 | 443"
-      - "WARP直连-08 | 162.159.198.112 | 1701"
-      - "WARP直连-09 | 162.159.199.243 | 443"
-      - "WARP直连-10 | 162.159.199.18 | 443"
-      - "WARP直连-11 | 162.159.199.226 | 8443"
-      - "WARP直连-12 | 162.159.199.226 | 4500"
-      - "WARP直连-13 | 162.159.199.18 | 4443"
-      - "WARP直连-14 | 162.159.199.226 | 1701"
-      - "WARP直连-15 | 162.159.199.122 | 4443"
-      - "WARP直连-16 | 162.159.199.122 | 8095"
-      - "WARP直连-17 | 162.159.198.138 | 443"
-      - "WARP直连-18 | 162.159.199.226 | 443"
-      - "WARP直连-19 | 162.159.199.166 | 443"
       - "默认1"
       - "🇭🇰 香港1"
       - "🇭🇰 香港2"
@@ -185,277 +128,11 @@ rules:
   - MATCH,端点选择
 
 proxies:
-  - name: "WARP直连-01 | 162.159.198.112 | 4500"
-    type: masque
-    server: 162.159.198.112
-    port: 4500
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-02 | 162.159.199.166 | 1701"
-    type: masque
-    server: 162.159.199.166
-    port: 1701
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-03 | 162.159.198.138 | 500"
-    type: masque
-    server: 162.159.198.138
-    port: 500
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-04 | 162.159.199.18 | 4500"
-    type: masque
-    server: 162.159.199.18
-    port: 4500
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-05 | 162.159.198.112 | 8095"
-    type: masque
-    server: 162.159.198.112
-    port: 8095
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-06 | 162.159.198.112 | 500"
-    type: masque
-    server: 162.159.198.112
-    port: 500
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-07 | 162.159.199.84 | 443"
-    type: masque
-    server: 162.159.199.84
-    port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-08 | 162.159.198.112 | 1701"
-    type: masque
-    server: 162.159.198.112
-    port: 1701
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-09 | 162.159.199.243 | 443"
-    type: masque
-    server: 162.159.199.243
-    port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-10 | 162.159.199.18 | 443"
-    type: masque
-    server: 162.159.199.18
-    port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-11 | 162.159.199.226 | 8443"
-    type: masque
-    server: 162.159.199.226
-    port: 8443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-12 | 162.159.199.226 | 4500"
-    type: masque
-    server: 162.159.199.226
-    port: 4500
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-13 | 162.159.199.18 | 4443"
-    type: masque
-    server: 162.159.199.18
-    port: 4443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-14 | 162.159.199.226 | 1701"
-    type: masque
-    server: 162.159.199.226
-    port: 1701
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-15 | 162.159.199.122 | 4443"
-    type: masque
-    server: 162.159.199.122
-    port: 4443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-16 | 162.159.199.122 | 8095"
-    type: masque
-    server: 162.159.199.122
-    port: 8095
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-17 | 162.159.198.138 | 443"
-    type: masque
-    server: 162.159.198.138
-    port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-18 | 162.159.199.226 | 443"
-    type: masque
-    server: 162.159.199.226
-    port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
-  - name: "WARP直连-19 | 162.159.199.166 | 443"
-    type: masque
-    server: 162.159.199.166
-    port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
-    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
-    ip: 172.16.0.2
-    mtu: 1280
-    udp: true
-    remote-dns-resolve: true
-    congestion-controller: bbr
-    dns: [ 1.1.1.1, 8.8.8.8 ]
-    sni: www.microsoft.com
-
   - name: "默认1"
     type: masque
     server: 162.159.197.2
     port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -469,7 +146,7 @@ proxies:
     type: masque
     server: 43.129.179.241
     port: 8443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -483,7 +160,7 @@ proxies:
     type: masque
     server: 152.175.4.12
     port: 65535
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -497,7 +174,7 @@ proxies:
     type: masque
     server: 103.244.88.173
     port: 65535
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -511,7 +188,7 @@ proxies:
     type: masque
     server: 151.242.164.2
     port: 65534
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -525,7 +202,7 @@ proxies:
     type: masque
     server: 158.101.89.186
     port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -539,7 +216,7 @@ proxies:
     type: masque
     server: 45.87.102.254
     port: 65535
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -553,7 +230,7 @@ proxies:
     type: masque
     server: 13.250.41.68
     port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -567,7 +244,7 @@ proxies:
     type: masque
     server: 172.237.6.233
     port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -581,7 +258,7 @@ proxies:
     type: masque
     server: 13.124.209.180
     port: 443
-    private-key: MHcCAQEEIL7YGracyaqPTr0R3sQSxK2PMzpTR5AbjdYQ1Hv4al0yoAoGCCqGSM49AwEHoUQDQgAEPzyYQmCEHpVVLA6kmxjIkIR14k89HjdmGqLpcs9+LgwOB+DKmZY/48ieieyYGIdkR4xGawmIsoymXKuUnr/MLA==
+    private-key: MHcCAQEEIM3KcxauKECtD3CKo5u647pFs3veCaV/GNtIz5RaT0adoAoGCCqGSM49AwEHoUQDQgAESZd+E0lJlgcfywvFW6uPEbTw/J4BohlAOKRb62GXX4WTKOjqckO4L36gtsU1yqmtjl9C4LYIKRssPFkpK16Xeg==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
