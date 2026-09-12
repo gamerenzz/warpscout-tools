@@ -26,25 +26,39 @@ public_key = get_val("public-key")
 ip = get_val("ip")
 ipv6 = get_val("ipv6")
 
-# 2. 读取本地端点
-target_endpoints = []
+# 2. 读取端点池与自定义别名
+target_items = []  # 存储结构: [{"endpoint": "ip:port", "alias": "自定义别名或None"}]
+
 if os.path.exists(TXT_PATH):
-    print(f"[INFO] 载入本地优选端点池: {TXT_PATH}")
+    print(f"[INFO] 载入本地端点文件: {TXT_PATH}")
     with open(TXT_PATH, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line and not line.startswith("#"):
-                m = re.match(r'^((?:\d{1,3}\.){3}\d{1,3}:\d{1,5})', line)
-                if m and m.group(1) not in target_endpoints:
-                    target_endpoints.append(m.group(1))
+            if not line or line.startswith("#"):
+                continue
+            
+            # 提取备注
+            alias = None
+            if "#" in line:
+                parts = line.split("#", 1)
+                line = parts[0].strip()
+                alias = parts[1].strip()
+            
+            # 正则匹配 IP:Port
+            m = re.match(r'^((?:\d{1,3}\.){3}\d{1,3}:\d{1,5})', line)
+            if m:
+                ep = m.group(1)
+                if not any(item["endpoint"] == ep for item in target_items):
+                    target_items.append({"endpoint": ep, "alias": alias})
 
-if not target_endpoints:
-    target_endpoints = [
-        "162.159.199.144:4443", "162.159.198.88:8443",
-        "162.159.198.187:1701", "162.159.198.214:8095"
+if not target_items:
+    # 基础兜底
+    target_items = [
+        {"endpoint": "162.159.199.144:4443", "alias": None},
+        {"endpoint": "162.159.198.88:8443", "alias": None},
+        {"endpoint": "162.159.198.187:1701", "alias": None},
+        {"endpoint": "162.159.198.214:8095", "alias": None}
     ]
-
-target_endpoints = target_endpoints[:8]
 
 # 3. 解析 Opera 落地节点信息
 def parse_opera(filename, region_name):
@@ -83,14 +97,24 @@ opera_regions = {
     "美洲": parse_opera("opera_am.txt", "美洲")
 }
 
-# 4. 组装代理底座
+# 4. 组装代理底座 (智能赋予节点名称)
 underlying_proxies = []
 underlying_names = []
+special_ai_proxies = []  # 专门供 AI 手动直连选用的亚太反代节点
 
-for idx, ep in enumerate(target_endpoints, 1):
+for idx, item in enumerate(target_items, 1):
+    ep = item["endpoint"]
+    custom_alias = item["alias"]
     host, port = ep.split(":")
     assigned_sni = SNI_POOL[(idx - 1) % len(SNI_POOL)]
-    name = f"WARP直连-{idx:02d}"
+    
+    # 命名逻辑：若有别名使用自定义别名，否则自动编号
+    if custom_alias:
+        name = custom_alias
+        special_ai_proxies.append(name)  # 记录进专属列表
+    else:
+        name = f"WARP直连-{idx:02d}"
+    
     underlying_names.append(name)
     underlying_proxies.extend([
         f"  - name: '{name}'",
@@ -112,7 +136,7 @@ for idx, ep in enumerate(target_endpoints, 1):
         ""
     ])
 
-# 笛卡尔积组合套娃节点
+# 笛卡尔积组合套娃节点 (只取前 8 个端点当底座，防止节点爆炸)
 combo_proxies = []
 region_groups = {"亚洲": [], "欧洲": [], "美洲": []}
 
@@ -120,7 +144,7 @@ for region, landings in opera_regions.items():
     if not landings:
         continue
     for land in landings[:2]:
-        for base_name in underlying_names:
+        for base_name in underlying_names[:8]:
             c_name = f"{land['tag']}@{base_name}"
             region_groups[region].append(c_name)
             combo_proxies.append(
@@ -148,7 +172,7 @@ yaml_lines = [
     "    TLS:",
     "      ports: [443, 8443]",
     "  skip-domain:",
-    "    - '+.push.apple.com'",  # 只跳过苹果纯推送，不跳过普通网页与商店
+    "    - '+.push.apple.com'",
     "",
     "dns:",
     "  enable: true",
@@ -178,7 +202,7 @@ yaml_lines = [
     "proxies:"
 ] + underlying_proxies + combo_proxies
 
-# 6. 精细化策略组架构（新增 🍎 苹果海外商店与服务组）
+# 6. 精细化策略组架构 (融入亚太自建节点)
 yaml_lines.extend([
     "",
     "proxy-groups:",
@@ -200,16 +224,16 @@ yaml_lines.extend([
     "    proxies:"
 ] + [f"      - '{name}'" for name in underlying_names] + [
     "",
-    "  # 【AI专用组】优先走美洲/欧洲落地",
+    "  # 【AI专用组】不仅能走套娃地区线路，还能直接单选亚太极速落地！",
     "  - name: 🤖 人工智能",
     "    type: select",
     "    proxies:",
     "      - 🗽 美洲线路",
     "      - 🌍 欧洲线路",
     "      - ⚡ 亚洲线路",
+] + [f"      - '{name}'" for name in special_ai_proxies] + [  # 把新加坡、日本、韩国等单独列入 AI 组
     "      - ⚡ WARP极速优选",
     "",
-    "  # 【苹果海外服务】专门针对海外 App Store，强制美洲/海外套娃IP，避开被踢回国区",
     "  - name: 🍎 苹果服务",
     "    type: select",
     "    proxies:",
@@ -263,9 +287,7 @@ yaml_lines.extend([
 # 7. 全场景高精分流规则
 yaml_lines.extend([
     "rules:",
-    "  # 1. 彻底阻断 QUIC，避免 UDP 死锁与降速",
     "  - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT",
-    "",
     "  - GEOIP,private,DIRECT,no-resolve",
     "  - GEOIP,lan,DIRECT,no-resolve",
     "",
@@ -279,7 +301,7 @@ yaml_lines.extend([
     "  # 广告拦截",
     "  - GEOSITE,category-ads-all,🛑 广告拦截",
     "",
-    "  # 2. 【核心修复】苹果海外商店全套 API 与静态资源，强制走代理！防止被误判回国区",
+    "  # 苹果海外商店全套走代理",
     "  - DOMAIN-SUFFIX,apps.apple.com,🍎 苹果服务",
     "  - DOMAIN-SUFFIX,itunes.apple.com,🍎 苹果服务",
     "  - DOMAIN-SUFFIX,mzstatic.com,🍎 苹果服务",
@@ -287,7 +309,7 @@ yaml_lines.extend([
     "  - DOMAIN-SUFFIX,appsto.re,🍎 苹果服务",
     "  - DOMAIN,amp-api.music.apple.com,🍎 苹果服务",
     "",
-    "  # 3. AI 服务走专属分流组",
+    "  # AI 服务专属分流",
     "  - DOMAIN-SUFFIX,bard.google.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,gemini.google.com,🤖 人工智能",
     "  - DOMAIN-SUFFIX,aistudio.google.com,🤖 人工智能",
@@ -310,27 +332,28 @@ yaml_lines.extend([
     "  - GEOSITE,anthropic,🤖 人工智能",
     "  - DOMAIN-SUFFIX,claude.ai,🤖 人工智能",
     "",
-    "  # 4. 普通 Google 生态",
+    "  # 普通 Google 生态",
     "  - DOMAIN-SUFFIX,googleapis.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,gstatic.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,google.com,🚀 默认代理",
     "  - DOMAIN-SUFFIX,googleusercontent.com,🚀 默认代理",
     "",
-    "  # 5. 海外多媒体",
+    "  # 海外多媒体",
     "  - GEOSITE,youtube,📺 国际媒体",
     "  - GEOSITE,netflix,📺 国际媒体",
     "  - GEOSITE,spotify,📺 国际媒体",
     "",
-    "  # 6. 大陆直连白名单（苹果海外服务已在上方拦截，不会被误判）",
+    "  # 大陆直连白名单",
     "  - GEOSITE,cn,DIRECT",
     "  - GEOSITE,category-games@cn,DIRECT",
     "  - GEOIP,CN,DIRECT",
     "",
-    "  # 7. 兜底走默认代理",
+    "  # 兜底",
     "  - MATCH,🚀 默认代理"
 ])
 
 with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
     f.write("\n".join(yaml_lines))
 
-print(f"[OK] 成功修复苹果海外商店重定向问题！已生成: {OUTPUT_PATH}")
+print(f"[OK] 成功融合亚太专属反代端点！已写入 {len(target_items)} 个底座端点至: {OUTPUT_PATH}")
+print(f"[OK] 包含专属节点: {special_ai_proxies}")
