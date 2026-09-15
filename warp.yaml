@@ -62,12 +62,13 @@ proxy-groups:
       - 自动选择
       - 故障转移
       - "WARP直连-01 | 162.159.198.2 | 443"
+      - "WARP直连-02 | 162.159.198.2 | 500"
       - "🇸🇬 新加坡 AWS"
       - "🇯🇵 日本 Linode"
       - "🇰🇷 韩国 AWS"
-      - "WARP直连-05 | masque-sg1.bestcf.eu.cc | 443"
-      - "WARP直连-06 | masque-jp1.bestcf.eu.cc | 443"
-      - "WARP直连-07 | masque-kr1.bestcf.eu.cc | 443"
+      - "WARP直连-06 | masque-sg1.bestcf.eu.cc | 443"
+      - "WARP直连-07 | masque-jp1.bestcf.eu.cc | 443"
+      - "WARP直连-08 | masque-kr1.bestcf.eu.cc | 443"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Static.png"
 
   - name: 自动选择
@@ -77,12 +78,13 @@ proxy-groups:
     tolerance: 30
     proxies:
       - "WARP直连-01 | 162.159.198.2 | 443"
+      - "WARP直连-02 | 162.159.198.2 | 500"
       - "🇸🇬 新加坡 AWS"
       - "🇯🇵 日本 Linode"
       - "🇰🇷 韩国 AWS"
-      - "WARP直连-05 | masque-sg1.bestcf.eu.cc | 443"
-      - "WARP直连-06 | masque-jp1.bestcf.eu.cc | 443"
-      - "WARP直连-07 | masque-kr1.bestcf.eu.cc | 443"
+      - "WARP直连-06 | masque-sg1.bestcf.eu.cc | 443"
+      - "WARP直连-07 | masque-jp1.bestcf.eu.cc | 443"
+      - "WARP直连-08 | masque-kr1.bestcf.eu.cc | 443"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
 
   - name: 故障转移
@@ -91,12 +93,13 @@ proxy-groups:
     interval: 300
     proxies:
       - "WARP直连-01 | 162.159.198.2 | 443"
+      - "WARP直连-02 | 162.159.198.2 | 500"
       - "🇸🇬 新加坡 AWS"
       - "🇯🇵 日本 Linode"
       - "🇰🇷 韩国 AWS"
-      - "WARP直连-05 | masque-sg1.bestcf.eu.cc | 443"
-      - "WARP直连-06 | masque-jp1.bestcf.eu.cc | 443"
-      - "WARP直连-07 | masque-kr1.bestcf.eu.cc | 443"
+      - "WARP直连-06 | masque-sg1.bestcf.eu.cc | 443"
+      - "WARP直连-07 | masque-jp1.bestcf.eu.cc | 443"
+      - "WARP直连-08 | masque-kr1.bestcf.eu.cc | 443"
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
 
   - name: 全球直连
@@ -123,7 +126,21 @@ proxies:
     type: masque
     server: 162.159.198.2
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
+    public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
+    ip: 172.16.0.2
+    mtu: 1280
+    udp: true
+    remote-dns-resolve: true
+    congestion-controller: bbr
+    dns: [ 1.1.1.1, 8.8.8.8 ]
+    sni: www.microsoft.com
+
+  - name: "WARP直连-02 | 162.159.198.2 | 500"
+    type: masque
+    server: 162.159.198.2
+    port: 500
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -137,7 +154,7 @@ proxies:
     type: masque
     server: 13.250.41.68
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -151,7 +168,7 @@ proxies:
     type: masque
     server: 172.237.6.233
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -165,7 +182,7 @@ proxies:
     type: masque
     server: 13.124.209.180
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -175,11 +192,11 @@ proxies:
     dns: [ 1.1.1.1, 8.8.8.8 ]
     sni: www.microsoft.com
 
-  - name: "WARP直连-05 | masque-sg1.bestcf.eu.cc | 443"
+  - name: "WARP直连-06 | masque-sg1.bestcf.eu.cc | 443"
     type: masque
     server: masque-sg1.bestcf.eu.cc
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -189,11 +206,11 @@ proxies:
     dns: [ 1.1.1.1, 8.8.8.8 ]
     sni: www.microsoft.com
 
-  - name: "WARP直连-06 | masque-jp1.bestcf.eu.cc | 443"
+  - name: "WARP直连-07 | masque-jp1.bestcf.eu.cc | 443"
     type: masque
     server: masque-jp1.bestcf.eu.cc
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
@@ -203,11 +220,11 @@ proxies:
     dns: [ 1.1.1.1, 8.8.8.8 ]
     sni: www.microsoft.com
 
-  - name: "WARP直连-07 | masque-kr1.bestcf.eu.cc | 443"
+  - name: "WARP直连-08 | masque-kr1.bestcf.eu.cc | 443"
     type: masque
     server: masque-kr1.bestcf.eu.cc
     port: 443
-    private-key: MHcCAQEEIMjFoGvELDNNxJf4BST7HCtKEd0w4tjF5hdyos72Q3d9oAoGCCqGSM49AwEHoUQDQgAEsKtAjtio+VkiQR2oyBh28aW2vk4oe0x1f7Ai1siJODBDV63syILYr0Tr+xIsIgYxXFhdkQY2Xo97LLsgyUr6JA==
+    private-key: MHcCAQEEINPzPwpXIfNiliKTwd3gzy8DXSaz03QMvtgHuepvLWf8oAoGCCqGSM49AwEHoUQDQgAEOMjBX0g8ST1shnOJ7t+H7WkEQjHg4N//HJ5zmMnIDfb29ygCvwlzrZKHuDOv5TwwBWcIN45tLwWcG6mkpscS/A==
     public-key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIaU7MToJm9NKp8YfGxR6r+/h4mcG7SxI8tsW8OR1A5tv/zCzVbCRRh2t87/kxnP6lAy0lkr7qYwu+ox+k3dr6w==
     ip: 172.16.0.2
     mtu: 1280
